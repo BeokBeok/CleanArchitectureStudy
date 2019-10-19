@@ -1,7 +1,9 @@
-# Android Clean Architecture Study-01
+# Android Clean Architecture Study (완료)
 
 ## 목표
-* Android clean architecture 에 대해 학습하고 간단한 토이 프로젝트에 적용
+* Android clean architecture 학습
+* 토이 프로젝트(GitBeokTree)에 적용
+  * (경로 : BeokBeok/GitBeokTree)
 
 ## 계획
 - 11주 과정 (08/11 ~ 10/20 매주 일요일)
