@@ -1,11 +1,13 @@
 object BuildScript {
     private const val GRADLE_VERSION = "3.5.1"
+    private const val GOOGLE_SERVICE_VERSION = "4.3.2"
     const val KOTLIN_VERSION = "1.3.50"
     const val NAV_VERSION = "2.1.0"
 
     const val GRADLE = "com.android.tools.build:gradle:$GRADLE_VERSION"
     const val KOTLIN_GRADLE_PLUGIN = "org.jetbrains.kotlin:kotlin-gradle-plugin:$KOTLIN_VERSION"
     const val NAV_SAFE_ARG = "androidx.navigation:navigation-safe-args-gradle-plugin:$NAV_VERSION"
+    const val GOOGLE_SERVICE = "com.google.gms:google-services:$GOOGLE_SERVICE_VERSION"
 }
 
 object App {
@@ -94,4 +96,10 @@ object Glide {
     private const val VERSION = "4.9.0"
 
     const val GLIDE = "com.github.bumptech.glide:glide:$VERSION"
+}
+
+object Firebase {
+    private const val ANALYTICS_VERSION = "17.2.0"
+
+    const val ANALYTICS = "com.google.firebase:firebase-analytics:$ANALYTICS_VERSION"
 }

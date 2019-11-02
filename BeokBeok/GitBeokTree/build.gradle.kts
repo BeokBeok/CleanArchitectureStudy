@@ -8,6 +8,7 @@ buildscript {
             classpath(GRADLE)
             classpath(KOTLIN_GRADLE_PLUGIN)
             classpath(NAV_SAFE_ARG)
+            classpath(GOOGLE_SERVICE)
         }
     }
 }
