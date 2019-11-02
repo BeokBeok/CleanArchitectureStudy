@@ -2,6 +2,7 @@ plugins {
     id("com.android.application")
     id("kotlin-android")
     id("kotlin-kapt")
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -26,7 +27,7 @@ android {
 
     buildTypes {
         getByName("release") {
-            isMinifyEnabled = false
+            isMinifyEnabled = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -76,5 +77,9 @@ dependencies {
     Navigation.run {
         implementation(FRAGMENT)
         implementation(UI)
+    }
+
+    Firebase.run {
+        implementation(ANALYTICS)
     }
 }
