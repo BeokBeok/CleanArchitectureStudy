@@ -26,8 +26,8 @@ object App {
 }
 
 object Release {
-    const val VERSION_CODE = 2
-    const val VERSION_NAME = "0.0.2"
+    const val VERSION_CODE = 3
+    const val VERSION_NAME = "0.0.3"
 }
 
 object Test {
