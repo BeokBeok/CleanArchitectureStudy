@@ -13,25 +13,25 @@ class RepoBrowseRepository(
 ) : RepoBrowseDataSource {
 
     override suspend fun getRepoFileTree(
-        user: String,
+        userName: String,
         repoName: String,
         detail: String,
-        branch: String?
+        branchName: String
     ): Result<List<RepoFileTreeEntity>> = withContext(ioDispatcher) {
         repoBrowseDataSource.getRepoFileTree(
-            user,
+            userName,
             repoName,
             detail,
-            branch
+            branchName
         )
     }
 
     override suspend fun getRepoBranches(
-        user: String,
+        userName: String,
         repoName: String
     ): Result<List<String>> = withContext(ioDispatcher) {
         repoBrowseDataSource.getRepoBranches(
-            user,
+            userName,
             repoName
         )
     }

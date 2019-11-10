@@ -8,22 +8,22 @@ import retrofit2.http.Query
 
 interface RepoBrowseService {
 
-    @GET("repos/{user}/{repoName}/contents/{detail}")
+    @GET("repos/{userName}/{repoName}/contents/{detail}")
     suspend fun getRepoFileTree(
-        @Path("user")
-        user: String,
+        @Path("userName")
+        userName: String,
         @Path("repoName")
         repoName: String,
         @Path("detail")
         detail: String,
         @Query("ref")
-        branch: String?
+        branch: String
     ): List<RepoFileTree>
 
-    @GET("repos/{user}/{repoName}/branches")
+    @GET("repos/{userName}/{repoName}/branches")
     suspend fun getRepoBranches(
-        @Path("user")
-        user: String,
+        @Path("userName")
+        userName: String,
         @Path("repoName")
         repoName: String
     ): List<Branch>

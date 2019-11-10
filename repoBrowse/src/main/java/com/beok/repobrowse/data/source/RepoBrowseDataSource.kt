@@ -6,14 +6,14 @@ import com.beok.repobrowse.domain.entity.RepoFileTreeEntity
 interface RepoBrowseDataSource {
 
     suspend fun getRepoFileTree(
-        user: String,
+        userName: String,
         repoName: String,
         detail: String,
-        branch: String?
+        branchName: String
     ): Result<List<RepoFileTreeEntity>>
 
     suspend fun getRepoBranches(
-        user: String,
+        userName: String,
         repoName: String
     ): Result<List<String>>
 }

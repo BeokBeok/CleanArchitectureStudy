@@ -15,18 +15,18 @@ class RepoBrowseDataSourceImpl(
 ) : RepoBrowseDataSource {
 
     override suspend fun getRepoFileTree(
-        user: String,
+        userName: String,
         repoName: String,
         detail: String,
-        branch: String?
+        branchName: String
     ): Result<List<RepoFileTreeEntity>> = withContext(ioDispatcher) {
         return@withContext try {
             Result.Success(
                 retrofit.getRepoFileTree(
-                    user,
+                    userName,
                     repoName,
                     detail,
-                    branch
+                    branchName
                 ).map { repoFileTree ->
                     repoFileTree.mappingToDomain()
                 }
@@ -37,13 +37,13 @@ class RepoBrowseDataSourceImpl(
     }
 
     override suspend fun getRepoBranches(
-        user: String,
+        userName: String,
         repoName: String
     ): Result<List<String>> = withContext(ioDispatcher) {
         return@withContext try {
             Result.Success(
                 retrofit.getRepoBranches(
-                    user,
+                    userName,
                     repoName
                 ).map { it.mappingToPresenter() }
             )

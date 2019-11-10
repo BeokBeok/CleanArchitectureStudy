@@ -22,7 +22,7 @@ class RepoBrowseViewModel(
 
     private lateinit var userName: String
     private lateinit var repoName: String
-    private var branchName: String? = null
+    private lateinit var branchName: String
 
     val repoFileTree: LiveData<List<RepoFileTreeItem>> get() = _repoFileTree
     val errMsg: LiveData<Throwable> get() = _errMsg
@@ -32,7 +32,7 @@ class RepoBrowseViewModel(
     fun showRepoBrowser(
         userName: String,
         repoName: String,
-        branchName: String?
+        branchName: String
     ) = viewModelScope.launch {
         showProgressBar()
 
@@ -43,9 +43,9 @@ class RepoBrowseViewModel(
 
         addRepoFileTree(
             repoFileTreeEntity = userRepoBrowseUsecase.getRepoFileTree(
-                user = userName,
-                repo = repoName,
-                branch = branchName
+                userName = userName,
+                repoName = repoName,
+                branchName = branchName
             )
         )
         setUserRepoInfo(userName, repoName, branchName)
@@ -100,7 +100,7 @@ class RepoBrowseViewModel(
     private fun setUserRepoInfo(
         userName: String,
         repoName: String,
-        branchName: String?
+        branchName: String
     ) {
         this@RepoBrowseViewModel.let {
             it.userName = userName

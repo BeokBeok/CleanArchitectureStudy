@@ -56,9 +56,9 @@ class RepoBrowseFragment : BaseFragment<FragmentRepoBrowseBinding, RepoBrowseVie
 
     private fun showContents() {
         viewModel.showRepoBrowser(
-            args.user,
+            args.userName,
             args.repoName,
-            null
+            args.defaultBranch
         )
         viewModel.branch.observe(
             viewLifecycleOwner,

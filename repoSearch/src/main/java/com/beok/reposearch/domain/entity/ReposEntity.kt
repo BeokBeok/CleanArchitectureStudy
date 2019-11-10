@@ -8,5 +8,6 @@ data class ReposEntity(
     val stargazersCount: Int,
     val forks: Int,
     val license: LicenseEntity,
-    val updateAt: String
+    val updateAt: String,
+    val defaultBranch: String
 )

@@ -13,25 +13,25 @@ class UserRepoBrowseUsecase(
 ) {
 
     suspend fun getRepoFileTree(
-        user: String,
-        repo: String,
+        userName: String,
+        repoName: String,
         detail: String = "",
-        branch: String?
+        branchName: String
     ): Result<List<RepoFileTreeEntity>> = withContext(ioDispatcher) {
         repoBrowseRepository.getRepoFileTree(
-            user,
-            repo,
+            userName,
+            repoName,
             detail,
-            branch
+            branchName
         )
     }
 
     suspend fun getRepoBranches(
-        user: String,
+        userName: String,
         repoName: String
     ): Result<List<String>> = withContext(ioDispatcher) {
         repoBrowseRepository.getRepoBranches(
-            user,
+            userName,
             repoName
         )
     }

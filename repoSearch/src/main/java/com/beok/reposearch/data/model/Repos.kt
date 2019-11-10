@@ -235,5 +235,6 @@ fun Repos.mappingToDomain(): ReposEntity =
         stargazersCount = stargazersCount ?: 0,
         forks = forks ?: 0,
         license = license?.mappingToDomain() ?: LicenseEntity(""),
-        updateAt = updatedAt ?: ""
+        updateAt = updatedAt ?: "",
+        defaultBranch = defaultBranch ?: ""
     )

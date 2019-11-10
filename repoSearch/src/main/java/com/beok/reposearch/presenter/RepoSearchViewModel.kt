@@ -45,11 +45,13 @@ class RepoSearchViewModel(
 
     fun showRepo(
         user: String,
-        repoName: String
+        repo: String,
+        defaultBranch: String
     ) = navigate(
         RepoSearchFragmentDirections.actionReposearchToRepobrowse(
             user,
-            repoName
+            repo,
+            defaultBranch
         )
     )
 
