@@ -1,6 +1,5 @@
 package com.beok.repobrowse.data.model
 
-import com.beok.repobrowse.domain.entity.BranchEntity
 import com.google.gson.annotations.SerializedName
 
 data class Branch(
@@ -15,7 +14,4 @@ data class Branch(
     val commit: Commit? = null
 )
 
-fun Branch.mappingToDomain(): BranchEntity =
-    BranchEntity(
-        name = name ?: ""
-    )
+fun Branch.mappingToPresenter(): String = name ?: ""
