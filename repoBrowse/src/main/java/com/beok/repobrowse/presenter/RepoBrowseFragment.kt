@@ -47,7 +47,7 @@ class RepoBrowseFragment : BaseFragment<FragmentRepoBrowseBinding, RepoBrowseVie
         ArrayAdapter(
             requireContext(),
             android.R.layout.simple_spinner_item,
-            branches
+            getListWithDefaultBranchToTop(branches)
         ).also { adapter ->
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             binding.spBranch.adapter = adapter
@@ -75,6 +75,14 @@ class RepoBrowseFragment : BaseFragment<FragmentRepoBrowseBinding, RepoBrowseVie
                 showSnackBar(it.message ?: "")
             }
         )
+    }
+
+    private fun getListWithDefaultBranchToTop(branches: List<String>): List<String> {
+        val listToMutable = branches.toMutableList()
+        val index = listToMutable.indexOf(args.defaultBranch)
+        listToMutable.removeAt(index)
+        listToMutable.add(0, args.defaultBranch)
+        return listToMutable
     }
 
 }
