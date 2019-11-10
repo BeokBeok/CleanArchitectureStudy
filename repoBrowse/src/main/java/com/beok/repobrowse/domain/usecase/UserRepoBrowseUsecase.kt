@@ -13,12 +13,14 @@ class UserRepoBrowseUsecase(
     suspend operator fun invoke(
         user: String,
         repoName: String,
-        detail: String = ""
+        detail: String = "",
+        branch: String = "master"
     ) = withContext(ioDispatcher) {
         repoBrowseRepository.getRepoFileTree(
             user = user,
             repoName = repoName,
-            detail = detail
+            detail = detail,
+            branch = branch
         )
     }
 }
