@@ -18,26 +18,37 @@ class RepoBrowseViewModel(
     private val _repoFileTree = MutableLiveData<List<RepoFileTreeItem>>()
     private val _errMsg = MutableLiveData<Throwable>()
     private val _isLoading = MutableLiveData<Boolean>()
+    private val _branch = MutableLiveData<List<String>>()
 
     private lateinit var userName: String
     private lateinit var repoName: String
+    private var branchName: String? = null
 
     val repoFileTree: LiveData<List<RepoFileTreeItem>> get() = _repoFileTree
     val errMsg: LiveData<Throwable> get() = _errMsg
     val isLoading: LiveData<Boolean> get() = _isLoading
+    val branch: LiveData<List<String>> get() = _branch
 
     fun showRepoBrowser(
         userName: String,
-        repoName: String
+        repoName: String,
+        branchName: String?
     ) = viewModelScope.launch {
         showProgressBar()
+
+        if (_branch.value.isNullOrEmpty()) {
+            _branch.value =
+                (userRepoBrowseUsecase.getRepoBranches(userName, repoName) as Result.Success).data
+        }
+
         addRepoFileTree(
-            repoFileTreeEntity = userRepoBrowseUsecase(
-                userName,
-                repoName
+            repoFileTreeEntity = userRepoBrowseUsecase.getRepoFileTree(
+                user = userName,
+                repo = repoName,
+                branch = branchName
             )
         )
-        setUserAndRepoName(userName, repoName)
+        setUserRepoInfo(userName, repoName, branchName)
         hideProgressBar()
     }
 
@@ -45,10 +56,11 @@ class RepoBrowseViewModel(
         if (selectedItem.type == "dir") {
             if (selectedItem.expandable) {
                 addRepoFileTree(
-                    repoFileTreeEntity = userRepoBrowseUsecase(
+                    repoFileTreeEntity = userRepoBrowseUsecase.getRepoFileTree(
                         userName,
                         repoName,
-                        selectedItem.path
+                        selectedItem.path,
+                        branchName
                     )
                 )
             } else {
@@ -85,13 +97,15 @@ class RepoBrowseViewModel(
         setRepoBrowseData(repoFileTree = addedRepoFileTree)
     }
 
-    private fun setUserAndRepoName(
+    private fun setUserRepoInfo(
         userName: String,
-        repoName: String
+        repoName: String,
+        branchName: String?
     ) {
         this@RepoBrowseViewModel.let {
             it.userName = userName
             it.repoName = repoName
+            it.branchName = branchName
         }
     }
 

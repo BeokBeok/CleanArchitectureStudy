@@ -17,11 +17,11 @@ interface RepoBrowseService {
         @Path("detail")
         detail: String,
         @Query("ref")
-        branch: String
+        branch: String?
     ): List<RepoFileTree>
 
     @GET("repos/{user}/{repoName}/branches")
-    suspend fun getRepoBranch(
+    suspend fun getRepoBranches(
         @Path("user")
         user: String,
         @Path("repoName")

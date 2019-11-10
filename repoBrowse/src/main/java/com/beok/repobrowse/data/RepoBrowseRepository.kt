@@ -2,7 +2,6 @@ package com.beok.repobrowse.data
 
 import com.beok.common.Result
 import com.beok.repobrowse.data.source.RepoBrowseDataSource
-import com.beok.repobrowse.domain.entity.BranchEntity
 import com.beok.repobrowse.domain.entity.RepoFileTreeEntity
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
@@ -17,7 +16,7 @@ class RepoBrowseRepository(
         user: String,
         repoName: String,
         detail: String,
-        branch: String
+        branch: String?
     ): Result<List<RepoFileTreeEntity>> = withContext(ioDispatcher) {
         repoBrowseDataSource.getRepoFileTree(
             user,
@@ -27,11 +26,11 @@ class RepoBrowseRepository(
         )
     }
 
-    override suspend fun getRepoBranch(
+    override suspend fun getRepoBranches(
         user: String,
         repoName: String
-    ): Result<List<BranchEntity>> = withContext(ioDispatcher) {
-        repoBrowseDataSource.getRepoBranch(
+    ): Result<List<String>> = withContext(ioDispatcher) {
+        repoBrowseDataSource.getRepoBranches(
             user,
             repoName
         )

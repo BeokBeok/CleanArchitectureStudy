@@ -1,6 +1,8 @@
 package com.beok.repobrowse.domain.usecase
 
+import com.beok.common.Result
 import com.beok.repobrowse.data.RepoBrowseRepository
+import com.beok.repobrowse.domain.entity.RepoFileTreeEntity
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -10,17 +12,27 @@ class UserRepoBrowseUsecase(
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ) {
 
-    suspend operator fun invoke(
+    suspend fun getRepoFileTree(
         user: String,
-        repoName: String,
+        repo: String,
         detail: String = "",
-        branch: String = "master"
-    ) = withContext(ioDispatcher) {
+        branch: String?
+    ): Result<List<RepoFileTreeEntity>> = withContext(ioDispatcher) {
         repoBrowseRepository.getRepoFileTree(
-            user = user,
-            repoName = repoName,
-            detail = detail,
-            branch = branch
+            user,
+            repo,
+            detail,
+            branch
+        )
+    }
+
+    suspend fun getRepoBranches(
+        user: String,
+        repoName: String
+    ): Result<List<String>> = withContext(ioDispatcher) {
+        repoBrowseRepository.getRepoBranches(
+            user,
+            repoName
         )
     }
 }

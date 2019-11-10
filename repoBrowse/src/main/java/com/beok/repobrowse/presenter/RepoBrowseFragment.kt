@@ -2,6 +2,7 @@ package com.beok.repobrowse.presenter
 
 
 import android.os.Bundle
+import android.widget.ArrayAdapter
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.navArgs
 import com.beok.common.base.BaseFragment
@@ -22,8 +23,8 @@ class RepoBrowseFragment : BaseFragment<FragmentRepoBrowseBinding, RepoBrowseVie
         super.onActivityCreated(savedInstanceState)
         initBinding()
         initRecyclerView()
-        setObserve()
         showContents()
+        setObserveErrMsg()
     }
 
     override fun initBinding() {
@@ -42,14 +43,32 @@ class RepoBrowseFragment : BaseFragment<FragmentRepoBrowseBinding, RepoBrowseVie
         }
     }
 
+    private fun initSpinner(branches: List<String>) {
+        ArrayAdapter(
+            requireContext(),
+            android.R.layout.simple_spinner_item,
+            branches
+        ).also { adapter ->
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            binding.spBranch.adapter = adapter
+        }
+    }
+
     private fun showContents() {
         viewModel.showRepoBrowser(
             args.user,
-            args.repoName
+            args.repoName,
+            null
+        )
+        viewModel.branch.observe(
+            viewLifecycleOwner,
+            Observer {
+                initSpinner(it)
+            }
         )
     }
 
-    private fun setObserve() {
+    private fun setObserveErrMsg() {
         viewModel.errMsg.observe(
             viewLifecycleOwner,
             Observer {
@@ -57,4 +76,5 @@ class RepoBrowseFragment : BaseFragment<FragmentRepoBrowseBinding, RepoBrowseVie
             }
         )
     }
+
 }

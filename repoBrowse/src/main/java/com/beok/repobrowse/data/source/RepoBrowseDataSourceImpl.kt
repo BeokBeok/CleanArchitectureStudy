@@ -3,7 +3,7 @@ package com.beok.repobrowse.data.source
 import com.beok.common.Result
 import com.beok.repobrowse.data.RepoBrowseService
 import com.beok.repobrowse.data.model.mappingToDomain
-import com.beok.repobrowse.domain.entity.BranchEntity
+import com.beok.repobrowse.data.model.mappingToPresenter
 import com.beok.repobrowse.domain.entity.RepoFileTreeEntity
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
@@ -18,7 +18,7 @@ class RepoBrowseDataSourceImpl(
         user: String,
         repoName: String,
         detail: String,
-        branch: String
+        branch: String?
     ): Result<List<RepoFileTreeEntity>> = withContext(ioDispatcher) {
         return@withContext try {
             Result.Success(
@@ -36,16 +36,16 @@ class RepoBrowseDataSourceImpl(
         }
     }
 
-    override suspend fun getRepoBranch(
+    override suspend fun getRepoBranches(
         user: String,
         repoName: String
-    ): Result<List<BranchEntity>> = withContext(ioDispatcher) {
+    ): Result<List<String>> = withContext(ioDispatcher) {
         return@withContext try {
             Result.Success(
-                retrofit.getRepoBranch(
+                retrofit.getRepoBranches(
                     user,
                     repoName
-                ).map { it.mappingToDomain() }
+                ).map { it.mappingToPresenter() }
             )
         } catch (e: Exception) {
             Result.Error(e)
