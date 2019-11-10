@@ -2,7 +2,7 @@ package com.beok.repobrowse.domain.entity
 
 import com.beok.repobrowse.presenter.RepoFileTreeItem
 
-class RepoFileTreeEntity(
+data class RepoFileTreeEntity(
     val name: String,
     val path: String,
     val type: String,
