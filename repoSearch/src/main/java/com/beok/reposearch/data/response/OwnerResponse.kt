@@ -1,8 +1,8 @@
-package com.beok.reposearch.data.model
+package com.beok.reposearch.data.response
 
 import com.google.gson.annotations.SerializedName
 
-data class Owner(
+data class OwnerResponse(
 
     @SerializedName("gists_url")
     val gistsUrl: String? = null,

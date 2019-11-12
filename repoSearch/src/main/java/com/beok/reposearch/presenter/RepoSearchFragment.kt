@@ -59,18 +59,14 @@ class RepoSearchFragment : BaseFragment<FragmentRepoSearchBinding, RepoSearchVie
                         if (char != null) emitter.onNext(char)
                     }
 
-                    override fun afterTextChanged(s: Editable?) {
-                        // NO OP
-                    }
+                    override fun afterTextChanged(s: Editable?) = Unit
 
                     override fun beforeTextChanged(
                         s: CharSequence?,
                         start: Int,
                         count: Int,
                         after: Int
-                    ) {
-                        // NO OP
-                    }
+                    ) = Unit
                 })
             }.debounce(1, TimeUnit.SECONDS)
                 .observeOn(AndroidSchedulers.mainThread())
