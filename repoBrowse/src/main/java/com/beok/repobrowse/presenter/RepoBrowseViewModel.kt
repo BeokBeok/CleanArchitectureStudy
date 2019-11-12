@@ -9,10 +9,13 @@ import com.beok.common.succeeded
 import com.beok.repobrowse.domain.entity.RepoFileTreeEntity
 import com.beok.repobrowse.domain.entity.mappingToPresenter
 import com.beok.repobrowse.domain.usecase.UserRepoBrowseUsecase
+import com.beok.repobrowse.presenter.model.RepoFileTreeItem
+import com.beok.repobrowse.presenter.model.RepoUser
 import kotlinx.coroutines.launch
 
 class RepoBrowseViewModel(
-    private val userRepoBrowseUsecase: UserRepoBrowseUsecase
+    private val userRepoBrowseUsecase: UserRepoBrowseUsecase,
+    private val repoUser: RepoUser
 ) : BaseViewModel() {
 
     private val _repoFileTree = MutableLiveData<List<RepoFileTreeItem>>()
@@ -20,8 +23,6 @@ class RepoBrowseViewModel(
     private val _isLoading = MutableLiveData<Boolean>()
     private val _branch = MutableLiveData<List<String>>()
 
-    private lateinit var userName: String
-    private lateinit var repoName: String
     private lateinit var branchName: String
 
     val repoFileTree: LiveData<List<RepoFileTreeItem>> get() = _repoFileTree
@@ -48,8 +49,21 @@ class RepoBrowseViewModel(
                 branchName = branchName
             )
         )
-        setUserRepoInfo(userName, repoName, branchName)
+        this@RepoBrowseViewModel.branchName = branchName
         hideProgressBar()
+    }
+
+    fun changeBranch(
+        branchName: String
+    ) = viewModelScope.launch {
+        if (!this@RepoBrowseViewModel::branchName.isInitialized) return@launch
+        if (branchName == this@RepoBrowseViewModel.branchName) return@launch
+        _repoFileTree.value = null
+        showRepoBrowser(
+            repoUser.userName,
+            repoUser.repoName,
+            branchName
+        )
     }
 
     fun clickSpecificItem(selectedItem: RepoFileTreeItem) = viewModelScope.launch {
@@ -57,8 +71,8 @@ class RepoBrowseViewModel(
             if (selectedItem.expandable) {
                 addRepoFileTree(
                     repoFileTreeEntity = userRepoBrowseUsecase.getRepoFileTree(
-                        userName,
-                        repoName,
+                        repoUser.userName,
+                        repoUser.repoName,
                         selectedItem.path,
                         branchName
                     )
@@ -95,18 +109,6 @@ class RepoBrowseViewModel(
                 .toList()
         )
         setRepoBrowseData(repoFileTree = addedRepoFileTree)
-    }
-
-    private fun setUserRepoInfo(
-        userName: String,
-        repoName: String,
-        branchName: String
-    ) {
-        this@RepoBrowseViewModel.let {
-            it.userName = userName
-            it.repoName = repoName
-            it.branchName = branchName
-        }
     }
 
     private fun setRepoBrowseData(

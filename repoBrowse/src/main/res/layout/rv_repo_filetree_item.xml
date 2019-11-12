@@ -8,7 +8,7 @@
 
         <variable
             name="repoFileTreeItem"
-            type="com.beok.repobrowse.presenter.RepoFileTreeItem" />
+            type="com.beok.repobrowse.presenter.model.RepoFileTreeItem" />
 
         <variable
             name="vm"

@@ -11,12 +11,21 @@ import com.beok.repobrowse.R
 import com.beok.repobrowse.databinding.FragmentRepoBrowseBinding
 import com.beok.repobrowse.databinding.RvRepoFiletreeItemBinding
 import com.beok.repobrowse.domain.entity.RepoFileTreeEntity
+import com.beok.repobrowse.presenter.model.RepoUser
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.core.parameter.parametersOf
 
 class RepoBrowseFragment : BaseFragment<FragmentRepoBrowseBinding, RepoBrowseViewModel>(
     R.layout.fragment_repo_browse
 ) {
-    override val viewModel: RepoBrowseViewModel by viewModel()
+    override val viewModel: RepoBrowseViewModel by viewModel {
+        parametersOf(
+            RepoUser(
+                args.userName,
+                args.repoName
+            )
+        )
+    }
     private val args: RepoBrowseFragmentArgs by navArgs()
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -43,17 +52,6 @@ class RepoBrowseFragment : BaseFragment<FragmentRepoBrowseBinding, RepoBrowseVie
         }
     }
 
-    private fun initSpinner(branches: List<String>) {
-        ArrayAdapter(
-            requireContext(),
-            android.R.layout.simple_spinner_item,
-            getListWithDefaultBranchToTop(branches)
-        ).also { adapter ->
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-            binding.spBranch.adapter = adapter
-        }
-    }
-
     private fun showContents() {
         viewModel.showRepoBrowser(
             args.userName,
@@ -66,6 +64,17 @@ class RepoBrowseFragment : BaseFragment<FragmentRepoBrowseBinding, RepoBrowseVie
                 initSpinner(it)
             }
         )
+    }
+
+    private fun initSpinner(branches: List<String>) {
+        ArrayAdapter(
+            requireContext(),
+            android.R.layout.simple_spinner_item,
+            getListWithDefaultBranchToTop(branches)
+        ).also { adapter ->
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            binding.spBranch.adapter = adapter
+        }
     }
 
     private fun setObserveErrMsg() {

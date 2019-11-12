@@ -1,4 +1,4 @@
-package com.beok.repobrowse.presenter
+package com.beok.repobrowse.presenter.model
 
 data class RepoFileTreeItem(
     val name: String,
