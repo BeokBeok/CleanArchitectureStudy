@@ -15,10 +15,13 @@
             android:id="@+id/action_reposearch_to_repobrowse"
             app:destination="@id/fg_repo_browse">
             <argument
-                android:name="user"
+                android:name="userName"
                 app:argType="string" />
             <argument
                 android:name="repoName"
+                app:argType="string" />
+            <argument
+                android:name="defaultBranch"
                 app:argType="string" />
         </action>
     </fragment>
@@ -28,10 +31,13 @@
         android:name="com.beok.repobrowse.presenter.RepoBrowseFragment"
         android:label="RepoBrowseFragment">
         <argument
-            android:name="user"
+            android:name="userName"
             app:argType="string" />
         <argument
             android:name="repoName"
+            app:argType="string" />
+        <argument
+            android:name="defaultBranch"
             app:argType="string" />
         <action
             android:id="@+id/action_repobrowse_to_fileviewer"

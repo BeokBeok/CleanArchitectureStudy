@@ -2,7 +2,8 @@ package com.beok.repobrowse.data.source
 
 import com.beok.common.Result
 import com.beok.repobrowse.data.RepoBrowseService
-import com.beok.repobrowse.data.model.mappingToDomain
+import com.beok.repobrowse.data.response.mapToEntity
+import com.beok.repobrowse.domain.entity.BranchEntity
 import com.beok.repobrowse.domain.entity.RepoFileTreeEntity
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
@@ -14,19 +15,37 @@ class RepoBrowseDataSourceImpl(
 ) : RepoBrowseDataSource {
 
     override suspend fun getRepoFileTree(
-        user: String,
+        userName: String,
         repoName: String,
-        detail: String
+        detail: String,
+        branchName: String
     ): Result<List<RepoFileTreeEntity>> = withContext(ioDispatcher) {
         return@withContext try {
             Result.Success(
                 retrofit.getRepoFileTree(
-                    user,
+                    userName,
                     repoName,
-                    detail
+                    detail,
+                    branchName
                 ).map { repoFileTree ->
-                    repoFileTree.mappingToDomain()
+                    repoFileTree.mapToEntity()
                 }
+            )
+        } catch (e: Exception) {
+            Result.Error(e)
+        }
+    }
+
+    override suspend fun getRepoBranches(
+        userName: String,
+        repoName: String
+    ): Result<List<BranchEntity>> = withContext(ioDispatcher) {
+        return@withContext try {
+            Result.Success(
+                retrofit.getRepoBranches(
+                    userName,
+                    repoName
+                ).map { it.mapToEntity() }
             )
         } catch (e: Exception) {
             Result.Error(e)

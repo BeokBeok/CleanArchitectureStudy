@@ -6,6 +6,7 @@ import com.beok.repobrowse.data.source.RepoBrowseDataSource
 import com.beok.repobrowse.data.source.RepoBrowseDataSourceImpl
 import com.beok.repobrowse.domain.usecase.UserRepoBrowseUsecase
 import com.beok.repobrowse.presenter.RepoBrowseViewModel
+import com.beok.repobrowse.presenter.model.RepoUserModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
@@ -35,7 +36,7 @@ object RepoBrowseDI {
     }
 
     private val viewModelModule = module {
-        viewModel { RepoBrowseViewModel(get()) }
+        viewModel { (repoUser: RepoUserModel) -> RepoBrowseViewModel(get(), repoUser) }
     }
 
     val repoBrowseModule = listOf(
