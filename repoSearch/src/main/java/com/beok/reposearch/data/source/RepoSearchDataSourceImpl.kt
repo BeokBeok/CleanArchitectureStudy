@@ -4,7 +4,7 @@ import com.beok.common.Result
 import com.beok.common.Result.Error
 import com.beok.common.Result.Success
 import com.beok.reposearch.data.RepoSearchService
-import com.beok.reposearch.data.model.mappingToDomain
+import com.beok.reposearch.data.response.mappingToDomain
 import com.beok.reposearch.domain.entity.ReposEntity
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers

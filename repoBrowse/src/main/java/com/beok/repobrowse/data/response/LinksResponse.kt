@@ -1,8 +1,8 @@
-package com.beok.repobrowse.data.model
+package com.beok.repobrowse.data.response
 
 import com.google.gson.annotations.SerializedName
 
-data class Links(
+data class LinksResponse(
 
     @SerializedName("git")
     val git: String? = null,

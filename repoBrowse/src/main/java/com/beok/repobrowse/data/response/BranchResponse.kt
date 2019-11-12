@@ -1,8 +1,8 @@
-package com.beok.repobrowse.data.model
+package com.beok.repobrowse.data.response
 
 import com.google.gson.annotations.SerializedName
 
-data class Branch(
+data class BranchResponse(
 
     @SerializedName("protected")
     val jsonMemberProtected: Boolean? = null,
@@ -11,7 +11,7 @@ data class Branch(
     val name: String? = null,
 
     @SerializedName("commit")
-    val commit: Commit? = null
+    val commit: CommitResponse? = null
 )
 
-fun Branch.mappingToPresenter(): String = name ?: ""
+fun BranchResponse.mappingToPresenter(): String = name ?: ""

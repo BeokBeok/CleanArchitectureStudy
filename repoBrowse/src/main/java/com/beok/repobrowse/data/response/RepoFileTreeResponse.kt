@@ -1,9 +1,9 @@
-package com.beok.repobrowse.data.model
+package com.beok.repobrowse.data.response
 
 import com.beok.repobrowse.domain.entity.RepoFileTreeEntity
 import com.google.gson.annotations.SerializedName
 
-data class RepoFileTree(
+data class RepoFileTreeResponse(
 
     @SerializedName("path")
     val path: String? = null,
@@ -12,7 +12,7 @@ data class RepoFileTree(
     val size: Int? = null,
 
     @SerializedName("_links")
-    val links: Links? = null,
+    val links: LinksResponse? = null,
 
     @SerializedName("html_url")
     val htmlUrl: String? = null,
@@ -36,7 +36,7 @@ data class RepoFileTree(
     val url: String? = null
 )
 
-fun RepoFileTree.mappingToDomain(): RepoFileTreeEntity =
+fun RepoFileTreeResponse.mappingToDomain(): RepoFileTreeEntity =
     RepoFileTreeEntity(
         name = name ?: "",
         path = path ?: "",

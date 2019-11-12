@@ -2,8 +2,8 @@ package com.beok.repobrowse.data.source
 
 import com.beok.common.Result
 import com.beok.repobrowse.data.RepoBrowseService
-import com.beok.repobrowse.data.model.mappingToDomain
-import com.beok.repobrowse.data.model.mappingToPresenter
+import com.beok.repobrowse.data.response.mappingToDomain
+import com.beok.repobrowse.data.response.mappingToPresenter
 import com.beok.repobrowse.domain.entity.RepoFileTreeEntity
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers

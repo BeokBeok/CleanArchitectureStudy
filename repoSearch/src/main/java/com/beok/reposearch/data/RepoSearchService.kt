@@ -1,6 +1,6 @@
 package com.beok.reposearch.data
 
-import com.beok.reposearch.data.model.Repos
+import com.beok.reposearch.data.response.ReposResponse
 import retrofit2.http.GET
 import retrofit2.http.Path
 
@@ -10,6 +10,6 @@ interface RepoSearchService {
     suspend fun getRepoList(
         @Path("user")
         user: String
-    ): List<Repos>
+    ): List<ReposResponse>
 
 }

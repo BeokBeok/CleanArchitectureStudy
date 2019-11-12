@@ -1,7 +1,7 @@
 package com.beok.repobrowse.data
 
-import com.beok.repobrowse.data.model.Branch
-import com.beok.repobrowse.data.model.RepoFileTree
+import com.beok.repobrowse.data.response.BranchResponse
+import com.beok.repobrowse.data.response.RepoFileTreeResponse
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -18,7 +18,7 @@ interface RepoBrowseService {
         detail: String,
         @Query("ref")
         branch: String
-    ): List<RepoFileTree>
+    ): List<RepoFileTreeResponse>
 
     @GET("repos/{userName}/{repoName}/branches")
     suspend fun getRepoBranches(
@@ -26,5 +26,5 @@ interface RepoBrowseService {
         userName: String,
         @Path("repoName")
         repoName: String
-    ): List<Branch>
+    ): List<BranchResponse>
 }

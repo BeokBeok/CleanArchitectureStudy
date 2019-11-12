@@ -1,8 +1,8 @@
-package com.beok.repobrowse.data.model
+package com.beok.repobrowse.data.response
 
 import com.google.gson.annotations.SerializedName
 
-data class Commit(
+data class CommitResponse(
 
     @SerializedName("sha")
     val sha: String? = null,

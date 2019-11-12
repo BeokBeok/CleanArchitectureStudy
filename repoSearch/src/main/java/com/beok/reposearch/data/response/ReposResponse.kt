@@ -1,10 +1,10 @@
-package com.beok.reposearch.data.model
+package com.beok.reposearch.data.response
 
 import com.beok.reposearch.domain.entity.LicenseEntity
 import com.beok.reposearch.domain.entity.ReposEntity
 import com.google.gson.annotations.SerializedName
 
-data class Repos(
+data class ReposResponse(
 
     @SerializedName("stargazers_count")
     val stargazersCount: Int? = null,
@@ -58,7 +58,7 @@ data class Repos(
     val sshUrl: String? = null,
 
     @SerializedName("license")
-    val license: License? = null,
+    val license: LicenseResponse? = null,
 
     @SerializedName("full_name")
     val fullName: String? = null,
@@ -154,7 +154,7 @@ data class Repos(
     val hasPages: Boolean? = null,
 
     @SerializedName("owner")
-    val owner: Owner? = null,
+    val owner: OwnerResponse? = null,
 
     @SerializedName("commits_url")
     val commitsUrl: String? = null,
@@ -226,7 +226,7 @@ data class Repos(
     val forksCount: Int? = null
 )
 
-fun Repos.mappingToDomain(): ReposEntity =
+fun ReposResponse.mappingToDomain(): ReposEntity =
     ReposEntity(
         name = name ?: "",
         fork = fork ?: false,
