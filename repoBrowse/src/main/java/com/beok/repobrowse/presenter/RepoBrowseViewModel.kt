@@ -67,21 +67,21 @@ class RepoBrowseViewModel(
     }
 
     fun clickSpecificItem(selectedItem: RepoFileTreeItem) = viewModelScope.launch {
-        if (selectedItem.type == "dir") {
-            if (selectedItem.expandable) {
-                addRepoFileTree(
-                    repoFileTreeEntity = userRepoBrowseUsecase.getRepoFileTree(
-                        repoUser.userName,
-                        repoUser.repoName,
-                        selectedItem.path,
-                        branchName
-                    )
-                )
-            } else {
-                removeRepoFileTree(selectedItem)
-            }
-        } else {
+        if (selectedItem.type != "dir") {
             clickFileItem(selectedItemUrl = selectedItem.downloadUrl)
+            return@launch
+        }
+        if (selectedItem.expandable) {
+            addRepoFileTree(
+                repoFileTreeEntity = userRepoBrowseUsecase.getRepoFileTree(
+                    repoUser.userName,
+                    repoUser.repoName,
+                    selectedItem.path,
+                    branchName
+                )
+            )
+        } else {
+            removeRepoFileTree(selectedItem)
         }
     }
 
