@@ -58,7 +58,7 @@ class RepoBrowseViewModel(
     ) = viewModelScope.launch {
         if (!this@RepoBrowseViewModel::branchName.isInitialized) return@launch
         if (branchName == this@RepoBrowseViewModel.branchName) return@launch
-        _repoFileTree.value = null
+        removeRepoFileTree(null)
         showRepoBrowser(
             repoUser.userName,
             repoUser.repoName,
@@ -152,7 +152,11 @@ class RepoBrowseViewModel(
         }
     }
 
-    private fun removeRepoFileTree(parentItem: RepoFileTreeItem) {
+    private fun removeRepoFileTree(parentItem: RepoFileTreeItem?) {
+        if (parentItem == null) {
+            _repoFileTree.value = null
+            return
+        }
         val removedRepoFileTreeItem = mutableListOf<RepoFileTreeItem>()
         _repoFileTree.value?.let {
             removedRepoFileTreeItem.addAll(it)
