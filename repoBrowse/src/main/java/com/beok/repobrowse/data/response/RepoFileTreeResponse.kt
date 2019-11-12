@@ -36,7 +36,7 @@ data class RepoFileTreeResponse(
     val url: String? = null
 )
 
-fun RepoFileTreeResponse.mappingToDomain(): RepoFileTreeEntity =
+fun RepoFileTreeResponse.mapToEntity(): RepoFileTreeEntity =
     RepoFileTreeEntity(
         name = name ?: "",
         path = path ?: "",

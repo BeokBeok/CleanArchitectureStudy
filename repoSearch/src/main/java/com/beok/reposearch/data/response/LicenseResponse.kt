@@ -21,5 +21,5 @@ data class LicenseResponse(
     val nodeId: String? = null
 )
 
-fun LicenseResponse.mappingToDomain(): LicenseEntity =
+fun LicenseResponse.mapToEntity(): LicenseEntity =
     LicenseEntity(name = name ?: "")

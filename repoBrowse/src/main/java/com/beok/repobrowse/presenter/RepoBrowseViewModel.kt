@@ -6,8 +6,6 @@ import androidx.lifecycle.viewModelScope
 import com.beok.common.Result
 import com.beok.common.base.BaseViewModel
 import com.beok.common.succeeded
-import com.beok.repobrowse.domain.entity.RepoFileTreeEntity
-import com.beok.repobrowse.domain.entity.mappingToPresenter
 import com.beok.repobrowse.domain.usecase.UserRepoBrowseUsecase
 import com.beok.repobrowse.presenter.model.RepoFileTreeModel
 import com.beok.repobrowse.presenter.model.RepoUserModel
@@ -88,7 +86,7 @@ class RepoBrowseViewModel(
     private fun clickFileItem(selectedItemUrl: String) =
         navigate(RepoBrowseFragmentDirections.actionRepobrowseToFileviewer(selectedItemUrl))
 
-    private fun addRepoFileTree(repoFileTreeEntity: Result<List<RepoFileTreeEntity>>) {
+    private fun addRepoFileTree(repoFileTreeEntity: Result<List<RepoFileTreeModel>>) {
         if (!repoFileTreeEntity.succeeded) {
             setRepoBrowseData(
                 err = (repoFileTreeEntity as? Result.Error)?.exception
@@ -98,7 +96,6 @@ class RepoBrowseViewModel(
         }
         val addedRepoFileTree = getAddedRepoFileTree(
             (repoFileTreeEntity as Result.Success).data
-                .map { it.mappingToPresenter() }
                 .asSequence()
                 .sortedWith(
                     compareBy(

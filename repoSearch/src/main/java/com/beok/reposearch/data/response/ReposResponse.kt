@@ -226,7 +226,7 @@ data class ReposResponse(
     val forksCount: Int? = null
 )
 
-fun ReposResponse.mappingToDomain(): ReposEntity =
+fun ReposResponse.mapToEntity(): ReposEntity =
     ReposEntity(
         name = name ?: "",
         fork = fork ?: false,
@@ -234,7 +234,7 @@ fun ReposResponse.mappingToDomain(): ReposEntity =
         language = language ?: "",
         stargazersCount = stargazersCount ?: 0,
         forks = forks ?: 0,
-        license = license?.mappingToDomain() ?: LicenseEntity(""),
+        license = license?.mapToEntity() ?: LicenseEntity(""),
         updateAt = updatedAt ?: "",
         defaultBranch = defaultBranch ?: ""
     )

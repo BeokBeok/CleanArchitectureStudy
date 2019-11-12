@@ -1,6 +1,7 @@
 package com.beok.repobrowse.data.source
 
 import com.beok.common.Result
+import com.beok.repobrowse.domain.entity.BranchEntity
 import com.beok.repobrowse.domain.entity.RepoFileTreeEntity
 
 interface RepoBrowseDataSource {
@@ -15,5 +16,5 @@ interface RepoBrowseDataSource {
     suspend fun getRepoBranches(
         userName: String,
         repoName: String
-    ): Result<List<String>>
+    ): Result<List<BranchEntity>>
 }

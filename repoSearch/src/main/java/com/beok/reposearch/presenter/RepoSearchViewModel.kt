@@ -6,20 +6,20 @@ import androidx.lifecycle.viewModelScope
 import com.beok.common.Result
 import com.beok.common.base.BaseViewModel
 import com.beok.common.succeeded
-import com.beok.reposearch.domain.entity.ReposEntity
 import com.beok.reposearch.domain.usecase.UserRepoSearchUsecase
+import com.beok.reposearch.presenter.model.ReposModel
 import kotlinx.coroutines.launch
 
 class RepoSearchViewModel(
     private val userRepoSearchUsecase: UserRepoSearchUsecase
 ) : BaseViewModel() {
 
-    private val _repoList = MutableLiveData<List<ReposEntity>>()
+    private val _repoList = MutableLiveData<List<ReposModel>>()
     private val _errMsg = MutableLiveData<Throwable>()
     private val _isLoading = MutableLiveData<Boolean>(false)
     private val _userName = MutableLiveData<String>("")
 
-    val repoList: LiveData<List<ReposEntity>> get() = _repoList
+    val repoList: LiveData<List<ReposModel>> get() = _repoList
     val errMsg: LiveData<Throwable> get() = _errMsg
     val isLoading: LiveData<Boolean> get() = _isLoading
     val userName: LiveData<String> get() = _userName
@@ -65,7 +65,7 @@ class RepoSearchViewModel(
 
     private fun setRepoSearchData(
         userName: String = "",
-        repoList: List<ReposEntity> = listOf(),
+        repoList: List<ReposModel> = listOf(),
         err: Throwable = IllegalStateException("")
     ) {
         _userName.value = userName

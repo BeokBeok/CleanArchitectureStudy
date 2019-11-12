@@ -9,7 +9,7 @@
 
         <variable
             name="repo"
-            type="com.beok.reposearch.domain.entity.ReposEntity" />
+            type="com.beok.reposearch.presenter.model.ReposModel" />
 
         <variable
             name="vm"
@@ -127,7 +127,7 @@
             android:layout_height="20dp"
             android:layout_marginTop="4dp"
             android:contentDescription="@null"
-            android:visibility="@{repo.license.name.length() == 0 ? View.GONE : View.VISIBLE}"
+            android:visibility="@{repo.license.length() == 0 ? View.GONE : View.VISIBLE}"
             app:layout_constraintEnd_toStartOf="@id/tv_repo_license"
             app:layout_constraintStart_toEndOf="@id/tv_repo_forks"
             app:layout_constraintTop_toBottomOf="@id/tv_repo_url" />
@@ -138,7 +138,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
             android:layout_marginTop="4dp"
-            android:text="@{repo.license.name}"
+            android:text="@{repo.license}"
             app:layout_constraintStart_toEndOf="@id/iv_repo_license"
             app:layout_constraintTop_toBottomOf="@id/tv_repo_url"
             tools:text="MIT License" />

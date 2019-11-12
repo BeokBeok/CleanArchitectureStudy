@@ -1,8 +1,10 @@
 package com.beok.repobrowse.domain.usecase
 
 import com.beok.common.Result
+import com.beok.common.succeeded
 import com.beok.repobrowse.data.RepoBrowseRepository
-import com.beok.repobrowse.domain.entity.RepoFileTreeEntity
+import com.beok.repobrowse.domain.entity.mapToModel
+import com.beok.repobrowse.presenter.model.RepoFileTreeModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -17,13 +19,24 @@ class UserRepoBrowseUsecase(
         repoName: String,
         detail: String = "",
         branchName: String
-    ): Result<List<RepoFileTreeEntity>> = withContext(ioDispatcher) {
+    ): Result<List<RepoFileTreeModel>> = withContext(ioDispatcher) {
         repoBrowseRepository.getRepoFileTree(
             userName,
             repoName,
             detail,
             branchName
-        )
+        ).let {
+            if (it.succeeded) {
+                Result.Success(
+                    (it as Result.Success).data
+                        .map { data ->
+                            data.mapToModel()
+                        }
+                )
+            } else {
+                it as Result.Error
+            }
+        }
     }
 
     suspend fun getRepoBranches(
@@ -33,6 +46,17 @@ class UserRepoBrowseUsecase(
         repoBrowseRepository.getRepoBranches(
             userName,
             repoName
-        )
+        ).let {
+            if (it.succeeded) {
+                Result.Success(
+                    (it as Result.Success).data
+                        .map { data ->
+                            data.mapToModel()
+                        }
+                )
+            } else {
+                it as Result.Error
+            }
+        }
     }
 }

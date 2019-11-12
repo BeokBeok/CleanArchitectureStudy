@@ -4,7 +4,7 @@ import com.beok.common.Result
 import com.beok.common.Result.Error
 import com.beok.common.Result.Success
 import com.beok.reposearch.data.RepoSearchService
-import com.beok.reposearch.data.response.mappingToDomain
+import com.beok.reposearch.data.response.mapToEntity
 import com.beok.reposearch.domain.entity.ReposEntity
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
@@ -20,7 +20,7 @@ class RepoSearchDataSourceImpl(
             return@withContext try {
                 Success(retrofit.getRepoList(user)
                     .map { repoList ->
-                        repoList.mappingToDomain()
+                        repoList.mapToEntity()
                     })
             } catch (e: Exception) {
                 Error(e)

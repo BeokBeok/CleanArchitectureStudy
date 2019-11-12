@@ -9,7 +9,7 @@ data class RepoFileTreeEntity(
     val downloadUrl: String
 )
 
-fun RepoFileTreeEntity.mappingToPresenter(): RepoFileTreeModel =
+fun RepoFileTreeEntity.mapToModel(): RepoFileTreeModel =
     RepoFileTreeModel(
         name = name,
         path = path,
