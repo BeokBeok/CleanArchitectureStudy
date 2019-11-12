@@ -1,6 +1,6 @@
 package com.beok.repobrowse.domain.entity
 
-import com.beok.repobrowse.presenter.model.RepoFileTreeItem
+import com.beok.repobrowse.presenter.model.RepoFileTreeModel
 
 data class RepoFileTreeEntity(
     val name: String,
@@ -9,8 +9,8 @@ data class RepoFileTreeEntity(
     val downloadUrl: String
 )
 
-fun RepoFileTreeEntity.mappingToPresenter(): RepoFileTreeItem =
-    RepoFileTreeItem(
+fun RepoFileTreeEntity.mappingToPresenter(): RepoFileTreeModel =
+    RepoFileTreeModel(
         name = name,
         path = path,
         type = type,

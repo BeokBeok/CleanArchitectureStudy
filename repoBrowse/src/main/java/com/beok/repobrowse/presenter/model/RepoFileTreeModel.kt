@@ -1,6 +1,6 @@
 package com.beok.repobrowse.presenter.model
 
-data class RepoFileTreeItem(
+data class RepoFileTreeModel(
     val name: String,
     val path: String,
     val type: String,

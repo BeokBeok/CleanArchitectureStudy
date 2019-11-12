@@ -1,6 +1,6 @@
 package com.beok.repobrowse.presenter.model
 
-data class RepoUser(
+data class RepoUserModel(
     val userName: String,
     val repoName: String
 )
