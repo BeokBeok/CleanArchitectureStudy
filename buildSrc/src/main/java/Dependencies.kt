@@ -8,6 +8,7 @@ object BuildScript {
     const val KOTLIN_GRADLE_PLUGIN = "org.jetbrains.kotlin:kotlin-gradle-plugin:$KOTLIN_VERSION"
     const val NAV_SAFE_ARG = "androidx.navigation:navigation-safe-args-gradle-plugin:$NAV_VERSION"
     const val GOOGLE_SERVICE = "com.google.gms:google-services:$GOOGLE_SERVICE_VERSION"
+    const val RUNNER = "androidx.test.runner.AndroidJUnitRunner"
 }
 
 object App {
@@ -19,10 +20,6 @@ object App {
 
     const val KOTLIN_STDLIB_JDK =
         "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${BuildScript.KOTLIN_VERSION}"
-    val LIB_PATH = mapOf(
-        "dir" to "libs",
-        "include" to listOf("*.jar")
-    )
 }
 
 object Release {
@@ -30,7 +27,7 @@ object Release {
     const val VERSION_NAME = "0.0.2"
 }
 
-object Test {
+object TestLib {
     private const val JUNIT_VERSION = "1.1.1"
     private const val ESPRESSO_VERSION = "3.2.0"
 
@@ -74,7 +71,7 @@ object Retrofit {
 object Koin {
     private const val VERSION = "2.0.1"
 
-    const val KOIN = "org.koin:koin-core:$VERSION"
+    const val CORE = "org.koin:koin-core:$VERSION"
     const val VIEWMODEL = "org.koin:koin-androidx-viewmodel:$VERSION"
 }
 

@@ -1,0 +1,38 @@
+apply plugin: 'com.android.library'
+apply from: "$rootDir/common.gradle"
+
+android {
+    defaultConfig {
+        testInstrumentationRunner TestLib.RUNNER
+    }
+}
+
+dependencies {
+    implementation project(":common")
+    implementation project(":navigation")
+
+    implementation TestLib.JUNIT
+    implementation TestLib.ESPRESSO
+    implementation TestLib.KOTLIN_TEST_JUNIT
+
+    implementation Ui.MATERIAL
+    implementation Ui.CONSTRAINT_LAYOUT
+
+    implementation LifeCycle.EXT
+    implementation LifeCycle.VM_KTX
+
+    implementation Retrofit.RETROFIT
+    implementation Retrofit.CONVERTER_GSON
+    implementation Retrofit.LOGGING_INTERCEPTOR
+
+    implementation Koin.CORE
+    implementation Koin.VIEWMODEL
+
+    implementation Coroutine.COROUTINE
+
+    implementation Rx.KOTLIN
+    implementation Rx.ANDROID
+
+    implementation Navigation.FRAGMENT
+    implementation Navigation.UI
+}
