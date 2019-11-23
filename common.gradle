@@ -2,12 +2,13 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 
 android {
-    compileSdkVersion App.COMPILE_SDK
-    buildToolsVersion App.BUILD_TOOLS
+    compileSdkVersion AndroidSettings.COMPILE_SDK
+    buildToolsVersion AndroidSettings.BUILD_TOOLS
 
     defaultConfig {
-        minSdkVersion App.MIN_SDK
-        targetSdkVersion App.TARGET_SDK
+        minSdkVersion AndroidSettings.MIN_SDK
+        targetSdkVersion AndroidSettings.TARGET_SDK
+
         versionCode Release.VERSION_CODE
         versionName Release.VERSION_NAME
     }
@@ -38,5 +39,5 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation App.KOTLIN_STDLIB_JDK
+    implementation Libraries.KOTLIN_STDLIB_JDK
 }

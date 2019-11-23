@@ -4,8 +4,8 @@ apply from: "$rootDir/common.gradle"
 
 android {
     defaultConfig {
-        applicationId App.APP_ID
-        testInstrumentationRunner TestLib.RUNNER
+        applicationId AndroidSettings.APP_ID
+        testInstrumentationRunner Libraries.RUNNER
     }
 
     buildTypes {
@@ -26,18 +26,18 @@ dependencies {
     implementation project(":repoBrowse")
     implementation project(":fileViewer")
 
-    implementation TestLib.JUNIT
-    implementation TestLib.ESPRESSO
-    implementation TestLib.KOTLIN_TEST_JUNIT
+    implementation Libraries.JUNIT
+    implementation Libraries.ESPRESSO
+    implementation Libraries.KOTLIN_TEST_JUNIT
 
-    implementation Ui.MATERIAL
-    implementation Ui.CONSTRAINT_LAYOUT
+    implementation Libraries.MATERIAL
+    implementation Libraries.CONSTRAINT_LAYOUT
 
-    implementation Koin.CORE
-    implementation Koin.VIEWMODEL
+    implementation Libraries.KOIN_CORE
+    implementation Libraries.KOIN_VIEWMODEL
 
-    implementation Navigation.FRAGMENT
-    implementation Navigation.UI
+    implementation Libraries.NAVIGATION_FRAGMENT
+    implementation Libraries.NAVIGATION_UI
 
-    implementation Firebase.ANALYTICS
+    implementation Libraries.FIREBASE_ANALYTICS
 }

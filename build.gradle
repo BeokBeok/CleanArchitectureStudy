@@ -4,10 +4,10 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath BuildScript.GRADLE
-        classpath BuildScript.KOTLIN_GRADLE_PLUGIN
-        classpath BuildScript.NAV_SAFE_ARG
-        classpath BuildScript.GOOGLE_SERVICE
+        classpath ProjectDependencies.GRADLE
+        classpath ProjectDependencies.KOTLIN_GRADLE_PLUGIN
+        classpath ProjectDependencies.NAV_SAFE_ARG
+        classpath ProjectDependencies.GOOGLE_SERVICE
     }
 }
 

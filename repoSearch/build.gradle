@@ -3,7 +3,7 @@ apply from: "$rootDir/common.gradle"
 
 android {
     defaultConfig {
-        testInstrumentationRunner TestLib.RUNNER
+        testInstrumentationRunner Libraries.RUNNER
     }
 }
 
@@ -11,28 +11,28 @@ dependencies {
     implementation project(":common")
     implementation project(":navigation")
 
-    implementation TestLib.JUNIT
-    implementation TestLib.ESPRESSO
-    implementation TestLib.KOTLIN_TEST_JUNIT
+    implementation Libraries.JUNIT
+    implementation Libraries.ESPRESSO
+    implementation Libraries.KOTLIN_TEST_JUNIT
 
-    implementation Ui.MATERIAL
-    implementation Ui.CONSTRAINT_LAYOUT
+    implementation Libraries.MATERIAL
+    implementation Libraries.CONSTRAINT_LAYOUT
 
-    implementation LifeCycle.EXT
-    implementation LifeCycle.VM_KTX
+    implementation Libraries.LIFECYCLE_EXT
+    implementation Libraries.LIFECYCLE_VIEWMODEL
 
-    implementation Retrofit.RETROFIT
-    implementation Retrofit.CONVERTER_GSON
-    implementation Retrofit.LOGGING_INTERCEPTOR
+    implementation Libraries.RETROFIT
+    implementation Libraries.CONVERTER_GSON
+    implementation Libraries.LOGGING_INTERCEPTOR
 
-    implementation Koin.CORE
-    implementation Koin.VIEWMODEL
+    implementation Libraries.KOIN_CORE
+    implementation Libraries.KOIN_VIEWMODEL
 
-    implementation Coroutine.COROUTINE
+    implementation Libraries.COROUTINE
 
-    implementation Rx.KOTLIN
-    implementation Rx.ANDROID
+    implementation Libraries.RX_KOTLIN
+    implementation Libraries.RX_ANDROID
 
-    implementation Navigation.FRAGMENT
-    implementation Navigation.UI
+    implementation Libraries.NAVIGATION_FRAGMENT
+    implementation Libraries.NAVIGATION_UI
 }

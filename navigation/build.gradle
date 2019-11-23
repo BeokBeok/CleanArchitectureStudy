@@ -1,8 +1,8 @@
 apply plugin: 'com.android.library'
 apply from: "$rootDir/common.gradle"
-apply plugin: Navigation.SAFEARGS
+apply plugin: Libraries.NAVIGATION_SAFEARGS
 
 dependencies {
-    implementation Navigation.FRAGMENT
-    implementation Navigation.UI
+    implementation Libraries.NAVIGATION_FRAGMENT
+    implementation Libraries.NAVIGATION_UI
 }
