@@ -1,0 +1,43 @@
+apply plugin: 'com.android.application'
+apply plugin: 'com.google.gms.google-services'
+apply from: "$rootDir/common.gradle"
+
+android {
+    defaultConfig {
+        applicationId AndroidSettings.APP_ID
+        testInstrumentationRunner Libraries.RUNNER
+    }
+
+    buildTypes {
+        release {
+            proguardFiles(
+                    getDefaultProguardFile("proguard-android-optimize.txt"),
+                    "proguard-rules.pro",
+                    "retrofit2.pro",
+                    "gson.pro"
+            )
+        }
+    }
+}
+
+dependencies {
+    implementation project(":common")
+    implementation project(":repoSearch")
+    implementation project(":repoBrowse")
+    implementation project(":fileViewer")
+
+    implementation Libraries.JUNIT
+    implementation Libraries.ESPRESSO
+    implementation Libraries.KOTLIN_TEST_JUNIT
+
+    implementation Libraries.MATERIAL
+    implementation Libraries.CONSTRAINT_LAYOUT
+
+    implementation Libraries.KOIN_CORE
+    implementation Libraries.KOIN_VIEWMODEL
+
+    implementation Libraries.NAVIGATION_FRAGMENT
+    implementation Libraries.NAVIGATION_UI
+
+    implementation Libraries.FIREBASE_ANALYTICS
+}
