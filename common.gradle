@@ -1,0 +1,43 @@
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
+
+android {
+    compileSdkVersion AndroidSettings.COMPILE_SDK
+    buildToolsVersion AndroidSettings.BUILD_TOOLS
+
+    defaultConfig {
+        minSdkVersion AndroidSettings.MIN_SDK
+        targetSdkVersion AndroidSettings.TARGET_SDK
+
+        versionCode Release.VERSION_CODE
+        versionName Release.VERSION_NAME
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled true
+        }
+    }
+
+    dataBinding {
+        enabled = true
+    }
+
+    // Static interface methods are only supported starting with Android N (--min-api 24)
+    // https://github.com/JakeWharton/butterknife/issues/1416#issuecomment-444164629
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    // cannot inline bytecode built with jvm target 1.8 into bytecode
+    // that is being built with jvm target 1.6
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation Libraries.KOTLIN_STDLIB_JDK
+}

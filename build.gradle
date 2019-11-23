@@ -1,0 +1,23 @@
+buildscript {
+    repositories {
+        google()
+        jcenter()
+    }
+    dependencies {
+        classpath ProjectDependencies.GRADLE
+        classpath ProjectDependencies.KOTLIN_GRADLE_PLUGIN
+        classpath ProjectDependencies.NAV_SAFE_ARG
+        classpath ProjectDependencies.GOOGLE_SERVICE
+    }
+}
+
+allprojects {
+    repositories {
+        google()
+        jcenter()
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
