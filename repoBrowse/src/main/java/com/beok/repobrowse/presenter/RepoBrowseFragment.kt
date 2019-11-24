@@ -44,7 +44,7 @@ class RepoBrowseFragment : BaseFragment<FragmentRepoBrowseBinding, RepoBrowseVie
         binding.rvFiletree.run {
             setHasFixedSize(true)
             adapter =
-                RepoBrowseAdapter<List<RepoFileTreeEntity>, RvRepoFiletreeItemBinding>(
+                RepoBrowseAdapter<RepoFileTreeEntity, RvRepoFiletreeItemBinding>(
                     R.layout.rv_repo_filetree_item,
                     BR.repoFileTreeItem,
                     viewModel

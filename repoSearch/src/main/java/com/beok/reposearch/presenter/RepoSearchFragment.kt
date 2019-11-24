@@ -38,7 +38,7 @@ class RepoSearchFragment : BaseFragment<FragmentRepoSearchBinding, RepoSearchVie
         binding.rvContents.run {
             setHasFixedSize(true)
             adapter =
-                RepoSearchAdapter<List<ReposEntity>, RvRepoItemBinding>(
+                RepoSearchAdapter<ReposEntity, RvRepoItemBinding>(
                     R.layout.rv_repo_item,
                     BR.repo,
                     viewModel
