@@ -12,6 +12,8 @@ import com.beok.repobrowse.databinding.FragmentRepoBrowseBinding
 import com.beok.repobrowse.databinding.RvRepoFiletreeItemBinding
 import com.beok.repobrowse.domain.entity.RepoFileTreeEntity
 import com.beok.repobrowse.presenter.model.RepoUserModel
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.MobileAds
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 
@@ -32,6 +34,7 @@ class RepoBrowseFragment : BaseFragment<FragmentRepoBrowseBinding, RepoBrowseVie
         super.onActivityCreated(savedInstanceState)
         initBinding()
         initRecyclerView()
+        initAdMob()
         showContents()
         setObserveErrMsg()
     }
@@ -94,4 +97,9 @@ class RepoBrowseFragment : BaseFragment<FragmentRepoBrowseBinding, RepoBrowseVie
         return listToMutable
     }
 
+    private fun initAdMob() {
+        MobileAds.initialize(requireContext())
+        val adRequest = AdRequest.Builder().build()
+        binding.adView.loadAd(adRequest)
+    }
 }
