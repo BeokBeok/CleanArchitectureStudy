@@ -35,4 +35,6 @@ dependencies {
 
     implementation Libraries.NAVIGATION_FRAGMENT
     implementation Libraries.NAVIGATION_UI
+
+    implementation Libraries.PAGING
 }
