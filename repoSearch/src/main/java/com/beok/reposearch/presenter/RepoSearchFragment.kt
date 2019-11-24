@@ -9,7 +9,7 @@ import com.beok.reposearch.BR
 import com.beok.reposearch.R
 import com.beok.reposearch.databinding.FragmentRepoSearchBinding
 import com.beok.reposearch.databinding.RvRepoItemBinding
-import com.beok.reposearch.domain.entity.ReposEntity
+import com.beok.reposearch.presenter.model.ReposModel
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.subscribeBy
@@ -38,7 +38,7 @@ class RepoSearchFragment : BaseFragment<FragmentRepoSearchBinding, RepoSearchVie
         binding.rvContents.run {
             setHasFixedSize(true)
             adapter =
-                RepoSearchAdapter<ReposEntity, RvRepoItemBinding>(
+                RepoSearchAdapter<ReposModel, RvRepoItemBinding>(
                     R.layout.rv_repo_item,
                     BR.repo,
                     viewModel
