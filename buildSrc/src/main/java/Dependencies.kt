@@ -28,6 +28,8 @@ object Version {
     const val ANALYTICS = "17.2.0"
 
     const val PAGING = "2.1.0"
+
+    const val ROOM = "2.2.2"
 }
 
 object ProjectDependencies {
@@ -91,4 +93,7 @@ object Libraries {
     const val FIREBASE_ANALYTICS = "com.google.firebase:firebase-analytics:${Version.ANALYTICS}"
 
     const val PAGING = "androidx.paging:paging-runtime:${Version.PAGING}"
+
+    const val ROOM = "androidx.room:room-runtime:${Version.ROOM}"
+    const val ROOM_COMPILER = "androidx.room:room-compiler:${Version.ROOM}"
 }

@@ -37,4 +37,7 @@ dependencies {
     implementation Libraries.NAVIGATION_UI
 
     implementation Libraries.PAGING
+
+    implementation Libraries.ROOM
+    annotationProcessor Libraries.ROOM_COMPILER
 }
