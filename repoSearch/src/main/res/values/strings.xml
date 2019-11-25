@@ -1,4 +1,5 @@
 <resources>
+    <string name="app_key_banner">ca-app-pub-1017540929895357/7340345889</string>
 
     <string name="hint_input_user_to_search">레파지토리를 검색할 유저명을 입력해주세요.</string>
     <string name="url_star_img">https://kids-code-games.github.io/variables-war/images/star.png</string>
