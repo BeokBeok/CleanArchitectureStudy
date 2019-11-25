@@ -39,5 +39,5 @@ dependencies {
     implementation Libraries.PAGING
 
     implementation Libraries.ROOM
-    annotationProcessor Libraries.ROOM_COMPILER
+    kapt Libraries.ROOM_COMPILER
 }

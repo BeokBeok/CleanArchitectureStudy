@@ -3,6 +3,7 @@ package com.beok.reposearch.presenter
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import androidx.paging.PagedList
 import com.beok.common.Result
 import com.beok.common.base.BaseViewModel
 import com.beok.common.succeeded
@@ -14,12 +15,12 @@ class RepoSearchViewModel(
     private val userRepoSearchUsecase: UserRepoSearchUsecase
 ) : BaseViewModel() {
 
-    private val _repoList = MutableLiveData<List<ReposModel>>()
+    private val _repoList = MutableLiveData<PagedList<ReposModel>>()
     private val _errMsg = MutableLiveData<Throwable>()
     private val _isLoading = MutableLiveData<Boolean>(false)
     private val _userName = MutableLiveData<String>("")
 
-    val repoList: LiveData<List<ReposModel>> get() = _repoList
+    val repoList: LiveData<PagedList<ReposModel>> get() = _repoList
     val errMsg: LiveData<Throwable> get() = _errMsg
     val isLoading: LiveData<Boolean> get() = _isLoading
     val userName: LiveData<String> get() = _userName
@@ -31,16 +32,12 @@ class RepoSearchViewModel(
         val remoteRepos = userRepoSearchUsecase(user)
         hideProgressBar()
         if (!remoteRepos.succeeded) {
-            setRepoSearchData(
-                err = (remoteRepos as? Result.Error)?.exception
-                    ?: IllegalStateException("Data is null")
-            )
+            _errMsg.value = (remoteRepos as? Result.Error)?.exception
+                ?: IllegalStateException("Data is null")
             return@launch
         }
-        setRepoSearchData(
-            userName = user,
-            repoList = (remoteRepos as Result.Success).data
-        )
+        _userName.value = user
+        _repoList.postValue((remoteRepos as Result.Success).data)
     }
 
     fun showRepo(
@@ -63,13 +60,4 @@ class RepoSearchViewModel(
         _isLoading.value = false
     }
 
-    private fun setRepoSearchData(
-        userName: String = "",
-        repoList: List<ReposModel> = listOf(),
-        err: Throwable = IllegalStateException("")
-    ) {
-        _userName.value = userName
-        _repoList.value = repoList
-        if (!err.message.isNullOrEmpty()) _errMsg.value = err
-    }
 }

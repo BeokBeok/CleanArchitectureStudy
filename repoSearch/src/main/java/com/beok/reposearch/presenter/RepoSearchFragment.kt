@@ -4,11 +4,11 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import androidx.lifecycle.Observer
+import androidx.paging.PagedList
 import com.beok.common.base.BaseFragment
 import com.beok.reposearch.BR
 import com.beok.reposearch.R
 import com.beok.reposearch.databinding.FragmentRepoSearchBinding
-import com.beok.reposearch.databinding.RvRepoItemBinding
 import com.beok.reposearch.presenter.model.ReposModel
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -21,6 +21,13 @@ class RepoSearchFragment : BaseFragment<FragmentRepoSearchBinding, RepoSearchVie
 ) {
 
     override val viewModel: RepoSearchViewModel by viewModel()
+    private val repoSearchAdapter by lazy {
+        RepoSearchAdapter(
+            R.layout.rv_repo_item,
+            BR.repo,
+            viewModel
+        )
+    }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
@@ -37,13 +44,14 @@ class RepoSearchFragment : BaseFragment<FragmentRepoSearchBinding, RepoSearchVie
     private fun initRecyclerView() {
         binding.rvContents.run {
             setHasFixedSize(true)
-            adapter =
-                RepoSearchAdapter<ReposModel, RvRepoItemBinding>(
-                    R.layout.rv_repo_item,
-                    BR.repo,
-                    viewModel
-                )
+            adapter = repoSearchAdapter
         }
+        binding.vm?.repoList?.observe(
+            viewLifecycleOwner,
+            Observer<PagedList<ReposModel>> {
+                repoSearchAdapter.submitList(it)
+            }
+        )
     }
 
     private fun setTextChangedListener() {
@@ -72,7 +80,9 @@ class RepoSearchFragment : BaseFragment<FragmentRepoSearchBinding, RepoSearchVie
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeBy(
                     onNext = {
+                        binding.rvContents.scrollToPosition(0)
                         binding.vm?.searchUserRepo(it.toString())
+                        repoSearchAdapter.submitList(null)
                     },
                     onError = {
                         showSnackBar(it.message)

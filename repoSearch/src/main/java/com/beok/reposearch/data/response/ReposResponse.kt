@@ -1,6 +1,5 @@
 package com.beok.reposearch.data.response
 
-import com.beok.reposearch.domain.entity.LicenseEntity
 import com.beok.reposearch.domain.entity.ReposEntity
 import com.google.gson.annotations.SerializedName
 
@@ -228,13 +227,15 @@ data class ReposResponse(
 
 fun ReposResponse.mapToEntity(): ReposEntity =
     ReposEntity(
+        id = id ?: 0,
         name = name ?: "",
+        user = owner?.login ?: "",
         fork = fork ?: false,
         htmlUrl = htmlUrl ?: "",
         language = language ?: "",
         stargazersCount = stargazersCount ?: 0,
         forks = forks ?: 0,
-        license = license?.mapToEntity() ?: LicenseEntity(""),
+        license = license?.name ?: "",
         updateAt = updatedAt ?: "",
         defaultBranch = defaultBranch ?: ""
     )

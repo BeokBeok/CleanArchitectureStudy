@@ -1,6 +1,5 @@
 package com.beok.reposearch.data.response
 
-import com.beok.reposearch.domain.entity.LicenseEntity
 import com.google.gson.annotations.SerializedName
 
 data class LicenseResponse(
@@ -20,6 +19,3 @@ data class LicenseResponse(
     @SerializedName("node_id")
     val nodeId: String? = null
 )
-
-fun LicenseResponse.mapToEntity(): LicenseEntity =
-    LicenseEntity(name = name ?: "")
