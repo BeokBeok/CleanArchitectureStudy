@@ -4,12 +4,10 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import androidx.lifecycle.Observer
-import androidx.paging.PagedList
 import com.beok.common.base.BaseFragment
 import com.beok.reposearch.BR
 import com.beok.reposearch.R
 import com.beok.reposearch.databinding.FragmentRepoSearchBinding
-import com.beok.reposearch.presenter.model.ReposModel
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.subscribeBy
@@ -49,7 +47,7 @@ class RepoSearchFragment : BaseFragment<FragmentRepoSearchBinding, RepoSearchVie
         }
         viewModel.repoList.observe(
             viewLifecycleOwner,
-            Observer<PagedList<ReposModel>> {
+            Observer {
                 repoSearchAdapter.submitList(it)
             }
         )
@@ -83,7 +81,6 @@ class RepoSearchFragment : BaseFragment<FragmentRepoSearchBinding, RepoSearchVie
                     onNext = {
                         binding.rvContents.scrollToPosition(0)
                         viewModel.searchUserRepo(it.toString().toLowerCase(Locale.getDefault()))
-                        repoSearchAdapter.submitList(null)
                     },
                     onError = {
                         showSnackBar(it.message)
