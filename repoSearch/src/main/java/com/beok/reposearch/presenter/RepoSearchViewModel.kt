@@ -14,19 +14,22 @@ class RepoSearchViewModel(
 ) : BaseViewModel() {
 
     private val _userName = MutableLiveData<String>()
+    val userName: LiveData<String> get() = _userName
+    private val _isLoading = MutableLiveData<Boolean>(false)
+    val isLoading: LiveData<Boolean> get() = _isLoading
     private val _repoSearchResult: LiveData<RepoSearchResult> =
         Transformations.map(_userName) { userRepoSearchUsecase.invoke(it) }
-    private val _isLoading = MutableLiveData<Boolean>(false)
 
-    val userName: LiveData<String> get() = _userName
     val repoList: LiveData<PagedList<ReposModel>> =
         Transformations.switchMap(_repoSearchResult) { it.data }
     val errMsg: LiveData<Throwable> =
         Transformations.switchMap(_repoSearchResult) { it.error }
-    val isLoading: LiveData<Boolean> get() = _isLoading
+
 
     fun searchUserRepo(user: String) {
+        if (user.isEmpty()) return
         if (_userName.value == user) return // 같은 이름 검색 시, observe 방지
+
         showProgressBar()
         _userName.postValue(user)
         hideProgressBar()
