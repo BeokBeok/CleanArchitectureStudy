@@ -41,7 +41,7 @@ class RepoBrowseViewModel(
         }
 
         addRepoFileTree(
-            repoFileTreeEntity = userRepoBrowseUsecase.getRepoFileTree(
+            repoFileTreeModel = userRepoBrowseUsecase.getRepoFileTree(
                 userName = userName,
                 repoName = repoName,
                 branchName = branchName
@@ -71,7 +71,7 @@ class RepoBrowseViewModel(
         }
         if (selectedItem.expandable) {
             addRepoFileTree(
-                repoFileTreeEntity = userRepoBrowseUsecase.getRepoFileTree(
+                repoFileTreeModel = userRepoBrowseUsecase.getRepoFileTree(
                     repoUser.userName,
                     repoUser.repoName,
                     selectedItem.path,
@@ -86,16 +86,16 @@ class RepoBrowseViewModel(
     private fun clickFileItem(selectedItemUrl: String) =
         navigate(RepoBrowseFragmentDirections.actionRepobrowseToFileviewer(selectedItemUrl))
 
-    private fun addRepoFileTree(repoFileTreeEntity: Result<List<RepoFileTreeModel>>) {
-        if (!repoFileTreeEntity.succeeded) {
+    private fun addRepoFileTree(repoFileTreeModel: Result<List<RepoFileTreeModel>>) {
+        if (!repoFileTreeModel.succeeded) {
             setRepoBrowseData(
-                err = (repoFileTreeEntity as? Result.Error)?.exception
+                err = (repoFileTreeModel as? Result.Error)?.exception
                     ?: IllegalStateException("Data is null")
             )
             return
         }
         val addedRepoFileTree = getAddedRepoFileTree(
-            (repoFileTreeEntity as Result.Success).data
+            (repoFileTreeModel as Result.Success).data
                 .asSequence()
                 .sortedWith(
                     compareBy(

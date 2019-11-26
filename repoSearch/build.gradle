@@ -35,4 +35,10 @@ dependencies {
 
     implementation Libraries.NAVIGATION_FRAGMENT
     implementation Libraries.NAVIGATION_UI
+
+    implementation Libraries.PAGING
+
+    implementation Libraries.ROOM
+    implementation Libraries.ROOM_KTX
+    kapt Libraries.ROOM_COMPILER
 }
