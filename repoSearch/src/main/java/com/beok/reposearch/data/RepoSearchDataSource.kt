@@ -1,20 +1,17 @@
 package com.beok.reposearch.data
 
-import androidx.lifecycle.LiveData
 import androidx.paging.DataSource
-import androidx.paging.PagedList
-import com.beok.common.Result
 import com.beok.reposearch.domain.entity.ReposEntity
-import com.beok.reposearch.presenter.model.ReposModel
+import com.beok.reposearch.presenter.model.RepoSearchResult
 
 interface RepoSearchDataSource {
 
-    suspend fun getRepoList(user: String): Result<LiveData<PagedList<ReposModel>>>
+    fun getRepoList(user: String): RepoSearchResult
 
     interface Local {
         suspend fun insert(repos: List<ReposEntity>, insertFinished: () -> Unit)
 
-        suspend fun getRepos(user: String): DataSource.Factory<Int, ReposEntity>
+        fun getRepos(user: String): DataSource.Factory<Int, ReposEntity>
     }
 
     interface Remote {

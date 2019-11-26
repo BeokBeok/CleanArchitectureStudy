@@ -2,42 +2,34 @@ package com.beok.reposearch.presenter
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.Transformations
 import androidx.paging.PagedList
-import com.beok.common.Result
 import com.beok.common.base.BaseViewModel
-import com.beok.common.succeeded
 import com.beok.reposearch.domain.usecase.UserRepoSearchUsecase
+import com.beok.reposearch.presenter.model.RepoSearchResult
 import com.beok.reposearch.presenter.model.ReposModel
-import kotlinx.coroutines.launch
 
 class RepoSearchViewModel(
     private val userRepoSearchUsecase: UserRepoSearchUsecase
 ) : BaseViewModel() {
 
-    private val _repoList = MutableLiveData<PagedList<ReposModel>>()
-    private val _errMsg = MutableLiveData<Throwable>()
+    private val _userName = MutableLiveData<String>()
+    private val _repoSearchResult: LiveData<RepoSearchResult> =
+        Transformations.map(_userName) { userRepoSearchUsecase.invoke(it) }
     private val _isLoading = MutableLiveData<Boolean>(false)
-    private val _userName = MutableLiveData<String>("")
 
-    val repoList: LiveData<PagedList<ReposModel>> get() = _repoList
-    val errMsg: LiveData<Throwable> get() = _errMsg
-    val isLoading: LiveData<Boolean> get() = _isLoading
     val userName: LiveData<String> get() = _userName
+    val repoList: LiveData<PagedList<ReposModel>> =
+        Transformations.switchMap(_repoSearchResult) { it.data }
+    val errMsg: LiveData<Throwable> =
+        Transformations.switchMap(_repoSearchResult) { it.error }
+    val isLoading: LiveData<Boolean> get() = _isLoading
 
-    fun searchUserRepo(user: String) = viewModelScope.launch {
-        if (_userName.value == user) return@launch // 같은 이름 검색 시, observe 방지
-
+    fun searchUserRepo(user: String) {
+        if (_userName.value == user) return // 같은 이름 검색 시, observe 방지
         showProgressBar()
-        val remoteRepos = userRepoSearchUsecase(user)
+        _userName.postValue(user)
         hideProgressBar()
-        if (!remoteRepos.succeeded) {
-            _errMsg.value = (remoteRepos as? Result.Error)?.exception
-                ?: IllegalStateException("Data is null")
-            return@launch
-        }
-        _userName.value = user
-        _repoList.postValue((remoteRepos as Result.Success).data)
     }
 
     fun showRepo(

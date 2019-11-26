@@ -1,6 +1,5 @@
 package com.beok.reposearch.data.source.remote
 
-import android.util.Log
 import com.beok.reposearch.data.RepoSearchDataSource
 import com.beok.reposearch.data.response.mapToEntity
 import com.beok.reposearch.domain.entity.ReposEntity
@@ -19,7 +18,6 @@ class RepoSearchRemoteDataSource(
         onSuccess: (repos: List<ReposEntity>) -> Unit,
         onError: (t: Throwable) -> Unit
     ) = withContext(ioDispatcher) {
-        Log.d("kkk", "RepoSearchRemoteDataSource getRepoList")
         return@withContext try {
             onSuccess(retrofit.getRepoList(user, page)
                 .map { repoList -> repoList.mapToEntity() })

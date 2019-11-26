@@ -20,8 +20,6 @@ class RepoSearchLocalDataSource(
         insertFinished.invoke()
     }
 
-    override suspend fun getRepos(user: String): DataSource.Factory<Int, ReposEntity> =
-        withContext(ioDispatcher) {
-            repoSearchDao.getRepos(user)
-        }
+    override fun getRepos(user: String): DataSource.Factory<Int, ReposEntity> =
+        repoSearchDao.getRepos(user)
 }

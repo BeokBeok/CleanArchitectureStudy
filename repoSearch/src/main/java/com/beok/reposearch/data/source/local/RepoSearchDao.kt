@@ -11,7 +11,7 @@ import com.beok.reposearch.domain.entity.ReposEntity
 interface RepoSearchDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(repos: List<ReposEntity>)
+    suspend fun insert(repos: List<ReposEntity>)
 
     @Query("SELECT * FROM repos WHERE user = :user")
     fun getRepos(user: String): DataSource.Factory<Int, ReposEntity>
