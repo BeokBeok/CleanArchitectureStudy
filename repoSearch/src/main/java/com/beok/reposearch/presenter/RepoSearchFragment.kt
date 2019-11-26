@@ -14,6 +14,7 @@ import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.subscribeBy
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import java.util.*
 import java.util.concurrent.TimeUnit
 
 class RepoSearchFragment : BaseFragment<FragmentRepoSearchBinding, RepoSearchViewModel>(
@@ -46,7 +47,7 @@ class RepoSearchFragment : BaseFragment<FragmentRepoSearchBinding, RepoSearchVie
             setHasFixedSize(true)
             adapter = repoSearchAdapter
         }
-        binding.vm?.repoList?.observe(
+        viewModel.repoList.observe(
             viewLifecycleOwner,
             Observer<PagedList<ReposModel>> {
                 repoSearchAdapter.submitList(it)
@@ -81,7 +82,7 @@ class RepoSearchFragment : BaseFragment<FragmentRepoSearchBinding, RepoSearchVie
                 .subscribeBy(
                     onNext = {
                         binding.rvContents.scrollToPosition(0)
-                        binding.vm?.searchUserRepo(it.toString())
+                        viewModel.searchUserRepo(it.toString().toLowerCase(Locale.getDefault()))
                         repoSearchAdapter.submitList(null)
                     },
                     onError = {
@@ -92,7 +93,7 @@ class RepoSearchFragment : BaseFragment<FragmentRepoSearchBinding, RepoSearchVie
     }
 
     private fun setObserve() {
-        binding.vm?.errMsg?.observe(
+        viewModel.errMsg.observe(
             viewLifecycleOwner,
             Observer {
                 showSnackBar(it.message)

@@ -2,6 +2,7 @@ package com.beok.reposearch.data.response
 
 import com.beok.reposearch.domain.entity.ReposEntity
 import com.google.gson.annotations.SerializedName
+import java.util.*
 
 data class ReposResponse(
 
@@ -229,7 +230,7 @@ fun ReposResponse.mapToEntity(): ReposEntity =
     ReposEntity(
         id = id ?: 0,
         name = name ?: "",
-        user = owner?.login ?: "",
+        user = owner?.login?.toLowerCase(Locale.getDefault()) ?: "",
         fork = fork ?: false,
         htmlUrl = htmlUrl ?: "",
         language = language ?: "",
