@@ -95,5 +95,6 @@ object Libraries {
     const val PAGING = "androidx.paging:paging-runtime:${Version.PAGING}"
 
     const val ROOM = "androidx.room:room-runtime:${Version.ROOM}"
+    const val ROOM_KTX = "androidx.room:room-ktx:${Version.ROOM}"
     const val ROOM_COMPILER = "androidx.room:room-compiler:${Version.ROOM}"
 }

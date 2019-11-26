@@ -39,5 +39,6 @@ dependencies {
     implementation Libraries.PAGING
 
     implementation Libraries.ROOM
+    implementation Libraries.ROOM_KTX
     kapt Libraries.ROOM_COMPILER
 }
