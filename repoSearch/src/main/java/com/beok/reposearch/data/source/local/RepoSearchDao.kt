@@ -13,6 +13,6 @@ interface RepoSearchDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(repos: List<ReposEntity>)
 
-    @Query("SELECT * FROM repos WHERE user = :user")
+    @Query("SELECT * FROM repos WHERE user = :user ORDER BY name ASC")
     fun getRepos(user: String): DataSource.Factory<Int, ReposEntity>
 }
