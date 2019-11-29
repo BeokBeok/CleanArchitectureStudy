@@ -8,6 +8,8 @@ import com.beok.common.base.BaseFragment
 import com.beok.reposearch.BR
 import com.beok.reposearch.R
 import com.beok.reposearch.databinding.FragmentRepoSearchBinding
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.MobileAds
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.subscribeBy
@@ -32,6 +34,7 @@ class RepoSearchFragment : BaseFragment<FragmentRepoSearchBinding, RepoSearchVie
         super.onActivityCreated(savedInstanceState)
         initBinding()
         initRecyclerView()
+        initAdMob()
         setTextChangedListener()
         setObserve()
     }
@@ -96,5 +99,11 @@ class RepoSearchFragment : BaseFragment<FragmentRepoSearchBinding, RepoSearchVie
                 showSnackBar(it.message)
             }
         )
+    }
+
+    private fun initAdMob() {
+        MobileAds.initialize(requireContext())
+        val adRequest = AdRequest.Builder().build()
+        binding.adView.loadAd(adRequest)
     }
 }

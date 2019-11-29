@@ -93,5 +93,4 @@ class RepoBrowseFragment : BaseFragment<FragmentRepoBrowseBinding, RepoBrowseVie
         listToMutable.add(0, args.defaultBranch)
         return listToMutable
     }
-
 }

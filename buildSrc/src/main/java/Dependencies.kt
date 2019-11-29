@@ -26,6 +26,7 @@ object Version {
     const val GLIDE = "4.9.0"
 
     const val ANALYTICS = "17.2.0"
+    const val ADS = "18.3.0"
 
     const val PAGING = "2.1.0"
 
@@ -91,6 +92,7 @@ object Libraries {
     const val GLIDE = "com.github.bumptech.glide:glide:${Version.GLIDE}"
 
     const val FIREBASE_ANALYTICS = "com.google.firebase:firebase-analytics:${Version.ANALYTICS}"
+    const val FIREBASE_ADS = "com.google.firebase:firebase-ads:${Version.ADS}"
 
     const val PAGING = "androidx.paging:paging-runtime:${Version.PAGING}"
 

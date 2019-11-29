@@ -36,6 +36,7 @@ dependencies {
     implementation Libraries.NAVIGATION_FRAGMENT
     implementation Libraries.NAVIGATION_UI
 
+    implementation Libraries.FIREBASE_ADS
     implementation Libraries.PAGING
 
     implementation Libraries.ROOM

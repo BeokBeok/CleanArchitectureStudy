@@ -40,4 +40,5 @@ dependencies {
     implementation Libraries.NAVIGATION_UI
 
     implementation Libraries.FIREBASE_ANALYTICS
+    implementation Libraries.FIREBASE_ADS
 }
