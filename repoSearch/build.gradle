@@ -37,4 +37,9 @@ dependencies {
     implementation Libraries.NAVIGATION_UI
 
     implementation Libraries.FIREBASE_ADS
+    implementation Libraries.PAGING
+
+    implementation Libraries.ROOM
+    implementation Libraries.ROOM_KTX
+    kapt Libraries.ROOM_COMPILER
 }

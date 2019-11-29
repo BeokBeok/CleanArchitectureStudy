@@ -34,7 +34,6 @@ abstract class BaseRecyclerView {
                     bindingId,
                     item
                 )
-                executePendingBindings()
             }
         }
     }
