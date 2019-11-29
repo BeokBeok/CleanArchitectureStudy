@@ -10,7 +10,7 @@ import com.beok.repobrowse.BR
 import com.beok.repobrowse.R
 import com.beok.repobrowse.databinding.FragmentRepoBrowseBinding
 import com.beok.repobrowse.databinding.RvRepoFiletreeItemBinding
-import com.beok.repobrowse.domain.entity.RepoFileTreeEntity
+import com.beok.repobrowse.presenter.model.RepoFileTreeModel
 import com.beok.repobrowse.presenter.model.RepoUserModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
@@ -44,7 +44,7 @@ class RepoBrowseFragment : BaseFragment<FragmentRepoBrowseBinding, RepoBrowseVie
         binding.rvFiletree.run {
             setHasFixedSize(true)
             adapter =
-                RepoBrowseAdapter<List<RepoFileTreeEntity>, RvRepoFiletreeItemBinding>(
+                RepoBrowseAdapter<RepoFileTreeModel, RvRepoFiletreeItemBinding>(
                     R.layout.rv_repo_filetree_item,
                     BR.repoFileTreeItem,
                     viewModel
@@ -93,5 +93,4 @@ class RepoBrowseFragment : BaseFragment<FragmentRepoBrowseBinding, RepoBrowseVie
         listToMutable.add(0, args.defaultBranch)
         return listToMutable
     }
-
 }
