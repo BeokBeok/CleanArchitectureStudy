@@ -31,6 +31,8 @@ object Version {
     const val PAGING = "2.1.0"
 
     const val ROOM = "2.2.2"
+
+    const val CORE_KTX = "1.1.0"
 }
 
 object ProjectDependencies {
@@ -99,4 +101,6 @@ object Libraries {
     const val ROOM = "androidx.room:room-runtime:${Version.ROOM}"
     const val ROOM_KTX = "androidx.room:room-ktx:${Version.ROOM}"
     const val ROOM_COMPILER = "androidx.room:room-compiler:${Version.ROOM}"
+
+    const val CORE_KTX = "androidx.core:core-ktx:${Version.CORE_KTX}"
 }
