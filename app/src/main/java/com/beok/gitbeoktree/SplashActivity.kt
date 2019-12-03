@@ -1,14 +1,15 @@
 package com.beok.gitbeoktree
 
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
+import com.beok.common.base.BaseActivity
 import com.beok.common.ext.goActivity
+import com.beok.gitbeoktree.databinding.ActivitySplashBinding
 import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.InterstitialAd
 import com.google.android.gms.ads.MobileAds
 
-class SplashActivity : AppCompatActivity() {
+class SplashActivity : BaseActivity<ActivitySplashBinding>(R.layout.activity_splash) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
