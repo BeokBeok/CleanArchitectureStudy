@@ -41,4 +41,6 @@ dependencies {
 
     implementation Libraries.FIREBASE_ANALYTICS
     implementation Libraries.FIREBASE_ADS
+
+    implementation Libraries.CORE_KTX
 }
