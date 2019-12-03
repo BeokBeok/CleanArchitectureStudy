@@ -38,6 +38,5 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>(R.layout.activity_spl
 
     private fun goMainActivity() {
         goActivity(MainActivity::class.java)
-        finish()
     }
 }
