@@ -52,8 +52,8 @@ object AndroidSettings {
 }
 
 object Release {
-    const val VERSION_CODE = 5
-    const val VERSION_NAME = "0.2.0"
+    const val VERSION_CODE = 6
+    const val VERSION_NAME = "0.2.1"
 }
 
 object Libraries {
