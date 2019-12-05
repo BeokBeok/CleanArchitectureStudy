@@ -35,6 +35,10 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>(R.layout.activity_spl
                         show()
                     }
 
+                    override fun onAdFailedToLoad(errorCode: Int) {
+                        goActivity(MainActivity::class.java)
+                    }
+
                     override fun onAdClosed() {
                         goActivity(MainActivity::class.java)
                     }
