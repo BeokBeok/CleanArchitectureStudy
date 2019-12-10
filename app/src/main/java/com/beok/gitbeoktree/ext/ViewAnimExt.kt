@@ -34,12 +34,10 @@ fun View.createCircularReveal(
     centerY: Int,
     startRadius: Float,
     endRadius: Float
-): Animator {
-    return ViewAnimationUtils.createCircularReveal(
-        this,
-        centerX,
-        centerY,
-        startRadius,
-        endRadius
-    )
-}
+): Animator = ViewAnimationUtils.createCircularReveal(
+    this,
+    centerX,
+    centerY,
+    startRadius,
+    endRadius
+)

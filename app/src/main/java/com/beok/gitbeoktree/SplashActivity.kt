@@ -6,8 +6,7 @@ import androidx.core.view.isInvisible
 import com.beok.common.base.BaseActivity
 import com.beok.common.ext.goActivity
 import com.beok.gitbeoktree.databinding.ActivitySplashBinding
-import com.beok.gitbeoktree.ext.createCircularReveal
-import com.beok.gitbeoktree.ext.screenBounds
+import com.beok.gitbeoktree.ext.*
 import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.InterstitialAd
@@ -47,21 +46,16 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>(R.layout.activity_spl
         interstitialAd.loadAd(AdRequest.Builder().build())
     }
 
-    private fun hasSourceBounds(): Boolean = intent?.sourceBounds != null
-
-    private fun preAnimationSetup() {
-        if (hasSourceBounds()) overridePendingTransition(0, 0)
-    }
-
     private fun performCircularReveal() {
-        if (!hasSourceBounds()) {
+        if (!hasSourceBounds) {
             binding.clRootLayout.isInvisible = false
             return
         }
-        intent?.sourceBounds?.let { sourceBounds ->
+
+        sourceBounds { sourceBounds ->
             binding.clRootLayout.run {
                 screenBounds { rootLayoutBounds ->
-                    if (rootLayoutBounds.contains(sourceBounds)) {
+                    if (!rootLayoutBounds.contains(sourceBounds)) {
                         isInvisible = false
                         return@screenBounds
                     }
@@ -69,14 +63,12 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>(R.layout.activity_spl
                     val circle = createCircularReveal(
                         centerX = sourceBounds.centerX() - rootLayoutBounds.left,
                         centerY = sourceBounds.centerY() - rootLayoutBounds.top,
-                        startRadius = (minOf(
-                            sourceBounds.width(),
-                            sourceBounds.height()
-                        ) * 0.2).toFloat(),
+                        startRadius = (minOf(sourceBounds.width(), sourceBounds.height()) * 0.2)
+                            .toFloat(),
                         endRadius = hypot(width.toFloat(), height.toFloat())
                     ).apply {
                         isInvisible = false
-                        duration = 500L
+                        duration = 1000L
                     }
                     AnimatorSet().apply { playTogether(circle) }
                         .start()
