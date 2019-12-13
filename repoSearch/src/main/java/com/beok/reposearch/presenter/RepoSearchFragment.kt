@@ -3,6 +3,7 @@ package com.beok.reposearch.presenter
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.View
 import androidx.lifecycle.Observer
 import com.beok.common.base.BaseFragment
 import com.beok.reposearch.BR
@@ -51,6 +52,7 @@ class RepoSearchFragment : BaseFragment<FragmentRepoSearchBinding, RepoSearchVie
         viewModel.repoList.observe(
             viewLifecycleOwner,
             Observer {
+                showProgressBar(it.size == 0)
                 repoSearchAdapter.submitList(it)
             }
         )
@@ -105,5 +107,10 @@ class RepoSearchFragment : BaseFragment<FragmentRepoSearchBinding, RepoSearchVie
         MobileAds.initialize(requireContext())
         val adRequest = AdRequest.Builder().build()
         binding.adView.loadAd(adRequest)
+    }
+
+    private fun showProgressBar(show: Boolean) {
+        if (show) binding.pbLoading.visibility = View.VISIBLE
+        else binding.pbLoading.visibility = View.GONE
     }
 }
