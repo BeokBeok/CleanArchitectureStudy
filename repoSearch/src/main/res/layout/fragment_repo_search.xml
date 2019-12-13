@@ -40,15 +40,27 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/et_search" />
 
-        <ProgressBar
-            android:id="@+id/pb_loading"
+        <com.facebook.shimmer.ShimmerFrameLayout
+            android:id="@+id/sfl_loading"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/et_search" />
+            app:layout_constraintTop_toBottomOf="@id/et_search">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:drawableTop="@android:mipmap/sym_def_app_icon"
+                android:drawablePadding="20dp"
+                android:text="@string/msg_loading"
+                android:textSize="14sp" />
+
+        </com.facebook.shimmer.ShimmerFrameLayout>
+
 
         <com.google.android.gms.ads.AdView xmlns:ads="http://schemas.android.com/apk/res-auto"
             android:id="@+id/adView"
