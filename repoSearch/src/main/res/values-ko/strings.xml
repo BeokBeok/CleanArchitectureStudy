@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="hint_input_user_to_search">레파지토리를 검색할 유저명을 입력해주세요.</string>
+    <string name="msg_loading">로딩중입니다…</string>
+
+</resources>
