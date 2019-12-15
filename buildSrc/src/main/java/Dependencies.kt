@@ -33,6 +33,8 @@ object Version {
     const val ROOM = "2.2.2"
 
     const val CORE_KTX = "1.1.0"
+
+    const val SHIMMER = "0.5.0"
 }
 
 object ProjectDependencies {
@@ -103,4 +105,6 @@ object Libraries {
     const val ROOM_COMPILER = "androidx.room:room-compiler:${Version.ROOM}"
 
     const val CORE_KTX = "androidx.core:core-ktx:${Version.CORE_KTX}"
+
+    const val SHIMMER = "com.facebook.shimmer:shimmer:${Version.SHIMMER}"
 }

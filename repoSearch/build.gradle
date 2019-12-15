@@ -42,4 +42,6 @@ dependencies {
     implementation Libraries.ROOM
     implementation Libraries.ROOM_KTX
     kapt Libraries.ROOM_COMPILER
+
+    implementation Libraries.SHIMMER
 }

@@ -3,11 +3,13 @@ package com.beok.reposearch.presenter
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.View
 import androidx.lifecycle.Observer
 import com.beok.common.base.BaseFragment
 import com.beok.reposearch.BR
 import com.beok.reposearch.R
 import com.beok.reposearch.databinding.FragmentRepoSearchBinding
+import com.facebook.shimmer.Shimmer
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.MobileAds
 import io.reactivex.Observable
@@ -39,6 +41,16 @@ class RepoSearchFragment : BaseFragment<FragmentRepoSearchBinding, RepoSearchVie
         setObserve()
     }
 
+    override fun onResume() {
+        super.onResume()
+        binding.sflLoading.startShimmer()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        binding.sflLoading.stopShimmer()
+    }
+
     override fun initBinding() {
         binding.vm = viewModel
     }
@@ -51,6 +63,7 @@ class RepoSearchFragment : BaseFragment<FragmentRepoSearchBinding, RepoSearchVie
         viewModel.repoList.observe(
             viewLifecycleOwner,
             Observer {
+                if (it.size == 0) showShimmer() else hideShimmer()
                 repoSearchAdapter.submitList(it)
             }
         )
@@ -87,6 +100,7 @@ class RepoSearchFragment : BaseFragment<FragmentRepoSearchBinding, RepoSearchVie
                     },
                     onError = {
                         showSnackBar(it.message)
+                        hideShimmer()
                     }
                 )
         )
@@ -97,6 +111,7 @@ class RepoSearchFragment : BaseFragment<FragmentRepoSearchBinding, RepoSearchVie
             viewLifecycleOwner,
             Observer {
                 showSnackBar(it.message)
+                hideShimmer()
             }
         )
     }
@@ -105,5 +120,23 @@ class RepoSearchFragment : BaseFragment<FragmentRepoSearchBinding, RepoSearchVie
         MobileAds.initialize(requireContext())
         val adRequest = AdRequest.Builder().build()
         binding.adView.loadAd(adRequest)
+    }
+
+    private fun showShimmer() {
+        binding.sflLoading.run {
+            visibility = View.VISIBLE
+            val shimmer = Shimmer.AlphaHighlightBuilder()
+                .setDirection(Shimmer.Direction.TOP_TO_BOTTOM)
+                .setTilt(0f)
+                .build()
+            setShimmer(shimmer)
+        }
+    }
+
+    private fun hideShimmer() {
+        binding.sflLoading.run {
+            stopShimmer()
+            visibility = View.GONE
+        }
     }
 }
