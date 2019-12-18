@@ -2,16 +2,16 @@ package com.beok.repobrowse.presenter
 
 import android.view.ViewGroup
 import androidx.annotation.LayoutRes
-import androidx.databinding.ViewDataBinding
 import com.beok.common.base.BaseRecyclerView
 import com.beok.repobrowse.databinding.RvRepoFiletreeItemBinding
+import com.beok.repobrowse.presenter.model.RepoFileTreeModel
 
-class RepoBrowseAdapter<A : Any, VDB : ViewDataBinding>(
+class RepoBrowseAdapter(
     @LayoutRes
     private val layoutRes: Int,
     private val bindingId: Int,
     private val vm: RepoBrowseViewModel
-) : BaseRecyclerView.Adapter<A, VDB>(
+) : BaseRecyclerView.Adapter<RepoFileTreeModel, RvRepoFiletreeItemBinding>(
     layoutRes,
     bindingId
 ) {
@@ -19,21 +19,14 @@ class RepoBrowseAdapter<A : Any, VDB : ViewDataBinding>(
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): BaseRecyclerView.ViewHolder<VDB> = ViewHolder(parent)
+    ): BaseRecyclerView.ViewHolder<RvRepoFiletreeItemBinding> = ViewHolder(parent)
 
-    inner class ViewHolder(
-        parent: ViewGroup
-    ) : BaseRecyclerView.ViewHolder<VDB>(
-        layoutRes,
-        parent,
-        bindingId
-    ) {
+    inner class ViewHolder(parent: ViewGroup) :
+        BaseRecyclerView.ViewHolder<RvRepoFiletreeItemBinding>(layoutRes, parent, bindingId) {
 
         override fun onBindViewHolder(item: Any?) {
             super.onBindViewHolder(item)
-            if (binding is RvRepoFiletreeItemBinding) {
-                binding.vm = this@RepoBrowseAdapter.vm
-            }
+            binding.vm = this@RepoBrowseAdapter.vm
         }
     }
 
