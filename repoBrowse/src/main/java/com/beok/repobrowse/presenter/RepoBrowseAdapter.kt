@@ -27,6 +27,7 @@ class RepoBrowseAdapter(
         override fun onBindViewHolder(item: Any?) {
             super.onBindViewHolder(item)
             binding.vm = this@RepoBrowseAdapter.vm
+            binding.executePendingBindings()
         }
     }
 
