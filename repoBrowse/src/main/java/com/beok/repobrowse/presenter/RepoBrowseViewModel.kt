@@ -29,15 +29,13 @@ class RepoBrowseViewModel(
     private var currentBranchName: String = ""
 
     fun setBranchList() = viewModelScope.launch {
-        val branchList =
-            (userRepoBrowseUsecase.getRepoBranches(
-                repoUser.userName,
-                repoUser.repoName
-            ) as Result.Success).data
+        _branch.value?.let { return@launch }
 
-        if (_branch.value.isNullOrEmpty()) {
-            _branch.value = branchList
-        }
+        val branchList = (userRepoBrowseUsecase.getRepoBranches(
+            repoUser.userName,
+            repoUser.repoName
+        ) as Result.Success).data
+        _branch.value = getListWithDefaultBranchToTop(branchList)
     }
 
     fun moveToBranch(branchName: String) = viewModelScope.launch {
@@ -148,6 +146,14 @@ class RepoBrowseViewModel(
         _repoFileTree.value = removedFileTree.filterNot {
             it.path.startsWith(parentItem.path.plus("/"))
         }
+    }
+
+    private fun getListWithDefaultBranchToTop(branches: List<String>): List<String> {
+        val listToMutable = branches.toMutableList()
+        val index = listToMutable.indexOf(repoUser.defaultBranch)
+        listToMutable.removeAt(index)
+        listToMutable.add(0, repoUser.defaultBranch)
+        return listToMutable
     }
 
     private fun showProgressBar() {
