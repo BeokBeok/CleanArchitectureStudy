@@ -62,6 +62,7 @@ class RepoBrowseFragment : BaseFragment<FragmentRepoBrowseBinding, RepoBrowseVie
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             binding.spBranch.adapter = adapter
         }
+        setPosIfPrevSelected()
     }
 
     private fun setObservers() {
@@ -80,6 +81,12 @@ class RepoBrowseFragment : BaseFragment<FragmentRepoBrowseBinding, RepoBrowseVie
                 }
             )
 
+        }
+    }
+
+    private fun setPosIfPrevSelected() {
+        if (viewModel.currentPos > -1) {
+            binding.spBranch.setSelection(viewModel.currentPos)
         }
     }
 }

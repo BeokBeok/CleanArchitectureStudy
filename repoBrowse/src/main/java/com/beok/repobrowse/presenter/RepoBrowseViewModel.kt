@@ -20,13 +20,14 @@ class RepoBrowseViewModel(
     private val _errMsg = MutableLiveData<Throwable>()
     private val _isLoading = MutableLiveData<Boolean>()
     private val _branch = MutableLiveData<List<String>>()
+    private var currentBranchName: String = ""
 
     val repoFileTree: LiveData<List<RepoFileTreeModel>> get() = _repoFileTree
     val errMsg: LiveData<Throwable> get() = _errMsg
     val isLoading: LiveData<Boolean> get() = _isLoading
     val branch: LiveData<List<String>> get() = _branch
-
-    private var currentBranchName: String = ""
+    var currentPos = -1
+        private set
 
     fun setBranchList() = viewModelScope.launch {
         _branch.value?.let { return@launch }
@@ -49,6 +50,7 @@ class RepoBrowseViewModel(
             )
         )
         this@RepoBrowseViewModel.currentBranchName = branchName
+        currentPos = _branch.value?.indexOf(branchName) ?: -1
         hideProgressBar()
     }
 
