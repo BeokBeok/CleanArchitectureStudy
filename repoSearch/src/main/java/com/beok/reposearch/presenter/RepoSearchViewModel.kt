@@ -31,11 +31,7 @@ class RepoSearchViewModel(
         _userName.value = user
     }
 
-    fun showRepo(
-        user: String,
-        repo: String,
-        defaultBranch: String
-    ) = navigate(
+    fun showRepo(user: String, repo: String, defaultBranch: String) = navigate(
         RepoSearchFragmentDirections.actionReposearchToRepobrowse(
             user,
             repo,

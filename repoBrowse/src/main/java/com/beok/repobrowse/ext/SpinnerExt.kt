@@ -16,9 +16,8 @@ fun Spinner.onItemSelectedListener(listener: (String) -> Unit) {
             position: Int,
             id: Long
         ) {
-            if (tag != position) {
-                listener.invoke(parent?.getItemAtPosition(position).toString())
-            }
+            if (view == null) return
+            listener.invoke(parent?.getItemAtPosition(position).toString())
         }
     }
 }

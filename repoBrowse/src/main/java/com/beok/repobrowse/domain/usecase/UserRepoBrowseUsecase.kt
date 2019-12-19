@@ -20,43 +20,24 @@ class UserRepoBrowseUsecase(
         detail: String = "",
         branchName: String
     ): Result<List<RepoFileTreeModel>> = withContext(ioDispatcher) {
-        repoBrowseRepository.getRepoFileTree(
-            userName,
-            repoName,
-            detail,
-            branchName
-        ).let {
+        repoBrowseRepository.getRepoFileTree(userName, repoName, detail, branchName).let {
             if (it.succeeded) {
-                Result.Success(
-                    (it as Result.Success).data
-                        .map { data ->
-                            data.mapToModel()
-                        }
-                )
+                Result.Success((it as Result.Success).data
+                    .map { data -> data.mapToModel() })
             } else {
                 it as Result.Error
             }
         }
     }
 
-    suspend fun getRepoBranches(
-        userName: String,
-        repoName: String
-    ): Result<List<String>> = withContext(ioDispatcher) {
-        repoBrowseRepository.getRepoBranches(
-            userName,
-            repoName
-        ).let {
-            if (it.succeeded) {
-                Result.Success(
-                    (it as Result.Success).data
-                        .map { data ->
-                            data.mapToModel()
-                        }
-                )
-            } else {
-                it as Result.Error
+    suspend fun getRepoBranches(userName: String, repoName: String): Result<List<String>> =
+        withContext(ioDispatcher) {
+            repoBrowseRepository.getRepoBranches(userName, repoName).let {
+                if (it.succeeded) {
+                    Result.Success((it as Result.Success).data)
+                } else {
+                    it as Result.Error
+                }
             }
         }
-    }
 }

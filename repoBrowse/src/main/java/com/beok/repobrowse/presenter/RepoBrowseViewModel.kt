@@ -20,48 +20,38 @@ class RepoBrowseViewModel(
     private val _errMsg = MutableLiveData<Throwable>()
     private val _isLoading = MutableLiveData<Boolean>()
     private val _branch = MutableLiveData<List<String>>()
-
-    private lateinit var branchName: String
+    private var currentBranchName: String = ""
 
     val repoFileTree: LiveData<List<RepoFileTreeModel>> get() = _repoFileTree
     val errMsg: LiveData<Throwable> get() = _errMsg
     val isLoading: LiveData<Boolean> get() = _isLoading
     val branch: LiveData<List<String>> get() = _branch
+    var currentPos = -1
+        private set
 
-    fun showRepoBrowser(
-        userName: String,
-        repoName: String,
-        branchName: String
-    ) = viewModelScope.launch {
+    fun setBranchList() = viewModelScope.launch {
+        _branch.value?.let { return@launch }
+
+        val branchList = (userRepoBrowseUsecase.getRepoBranches(
+            repoUser.userName,
+            repoUser.repoName
+        ) as Result.Success).data
+        _branch.value = getListWithDefaultBranchToTop(branchList)
+    }
+
+    fun moveToBranch(branchName: String) = viewModelScope.launch {
         showProgressBar()
-
-        if (_branch.value.isNullOrEmpty()) {
-            _branch.value =
-                (userRepoBrowseUsecase.getRepoBranches(userName, repoName) as Result.Success).data
-        }
-
-        addRepoFileTree(
-            repoFileTreeModel = userRepoBrowseUsecase.getRepoFileTree(
-                userName = userName,
-                repoName = repoName,
+        removeFileTreeAt(null)
+        setFileTree(
+            fileTree = userRepoBrowseUsecase.getRepoFileTree(
+                userName = repoUser.userName,
+                repoName = repoUser.repoName,
                 branchName = branchName
             )
         )
-        this@RepoBrowseViewModel.branchName = branchName
+        this@RepoBrowseViewModel.currentBranchName = branchName
+        currentPos = _branch.value?.indexOf(branchName) ?: -1
         hideProgressBar()
-    }
-
-    fun changeBranch(
-        branchName: String
-    ) = viewModelScope.launch {
-        if (!this@RepoBrowseViewModel::branchName.isInitialized) return@launch
-        if (branchName == this@RepoBrowseViewModel.branchName) return@launch
-        removeRepoFileTree(null)
-        showRepoBrowser(
-            repoUser.userName,
-            repoUser.repoName,
-            branchName
-        )
     }
 
     fun clickSpecificItem(selectedItem: RepoFileTreeModel) = viewModelScope.launch {
@@ -70,70 +60,53 @@ class RepoBrowseViewModel(
             return@launch
         }
         if (selectedItem.expandable) {
-            addRepoFileTree(
-                repoFileTreeModel = userRepoBrowseUsecase.getRepoFileTree(
+            setFileTree(
+                fileTree = userRepoBrowseUsecase.getRepoFileTree(
                     repoUser.userName,
                     repoUser.repoName,
                     selectedItem.path,
-                    branchName
+                    currentBranchName
                 )
             )
         } else {
-            removeRepoFileTree(selectedItem)
+            removeFileTreeAt(selectedItem)
         }
     }
 
     private fun clickFileItem(selectedItemUrl: String) =
         navigate(RepoBrowseFragmentDirections.actionRepobrowseToFileviewer(selectedItemUrl))
 
-    private fun addRepoFileTree(repoFileTreeModel: Result<List<RepoFileTreeModel>>) {
-        if (!repoFileTreeModel.succeeded) {
-            setRepoBrowseData(
-                err = (repoFileTreeModel as? Result.Error)?.exception
-                    ?: IllegalStateException("Data is null")
-            )
+    private fun setFileTree(fileTree: Result<List<RepoFileTreeModel>>) {
+        if (!fileTree.succeeded) {
+            _errMsg.value = (fileTree as? Result.Error)?.exception
             return
         }
-        val addedRepoFileTree = getAddedRepoFileTree(
-            (repoFileTreeModel as Result.Success).data
-                .asSequence()
-                .sortedWith(
-                    compareBy(
-                        RepoFileTreeModel::type,
-                        RepoFileTreeModel::path
-                    )
-                )
-                .toList()
+        val sortedFileTree = getUpdatedFileTree(
+            itemToAdd = (fileTree as Result.Success).data
+                .sortedWith(compareBy(RepoFileTreeModel::type, RepoFileTreeModel::path))
         )
-        setRepoBrowseData(repoFileTree = addedRepoFileTree)
+        _repoFileTree.value = sortedFileTree
     }
 
-    private fun setRepoBrowseData(
-        repoFileTree: List<RepoFileTreeModel> = emptyList(),
-        err: Throwable = IllegalStateException("")
-    ) {
-        _repoFileTree.value = repoFileTree
-        if (!err.message.isNullOrEmpty()) _errMsg.value = err
-    }
-
-    private fun getAddedRepoFileTree(itemToAdd: List<RepoFileTreeModel>): List<RepoFileTreeModel> {
-        val addedRepoFileTreeItem = mutableListOf<RepoFileTreeModel>()
+    private fun getUpdatedFileTree(itemToAdd: List<RepoFileTreeModel>): List<RepoFileTreeModel> {
+        val updatedFileTree = mutableListOf<RepoFileTreeModel>()
         _repoFileTree.value?.let {
-            addedRepoFileTreeItem.addAll(it)
+            updatedFileTree.addAll(it)
         } ?: run {
-            addedRepoFileTreeItem.addAll(itemToAdd)
-            return addedRepoFileTreeItem
+            return itemToAdd
         }
 
         val parentIndex = getParentIndex(
-            allFileTree = addedRepoFileTreeItem,
+            allFileTree = updatedFileTree,
             childFileTree = itemToAdd
         )
-        if (parentIndex >= 0) {
-            addedRepoFileTreeItem.addAll(parentIndex + 1, itemToAdd)
-            addedRepoFileTreeItem[parentIndex].expandable = false
-        }
-        return addedRepoFileTreeItem
+
+        addFileTree(
+            toIndex = parentIndex,
+            wholeTree = updatedFileTree,
+            item = itemToAdd
+        )
+        return updatedFileTree
     }
 
     private fun getParentIndex(
@@ -149,24 +122,40 @@ class RepoBrowseViewModel(
         }
     }
 
-    private fun removeRepoFileTree(parentItem: RepoFileTreeModel?) {
+    private fun addFileTree(
+        toIndex: Int,
+        wholeTree: MutableList<RepoFileTreeModel>,
+        item: List<RepoFileTreeModel>
+    ) {
+        if (toIndex >= 0) {
+            wholeTree.addAll(toIndex + 1, item)
+            wholeTree[toIndex].expandable = false
+        }
+    }
+
+    private fun removeFileTreeAt(parentItem: RepoFileTreeModel?) {
         if (parentItem == null) {
             _repoFileTree.value = null
             return
         }
-        val removedRepoFileTreeItem = mutableListOf<RepoFileTreeModel>()
+
+        val removedFileTree = mutableListOf<RepoFileTreeModel>()
         _repoFileTree.value?.let {
-            removedRepoFileTreeItem.addAll(it)
+            removedFileTree.addAll(it)
         } ?: return
 
-        removedRepoFileTreeItem[removedRepoFileTreeItem.indexOf(parentItem)].expandable = true
-        setRepoBrowseData(
-            repoFileTree = removedRepoFileTreeItem.asSequence()
-                .filterNot {
-                    it.path.startsWith(parentItem.path.plus("/"))
-                }
-                .toList()
-        )
+        removedFileTree[removedFileTree.indexOf(parentItem)].expandable = true
+        _repoFileTree.value = removedFileTree.filterNot {
+            it.path.startsWith(parentItem.path.plus("/"))
+        }
+    }
+
+    private fun getListWithDefaultBranchToTop(branches: List<String>): List<String> {
+        val listToMutable = branches.toMutableList()
+        val index = listToMutable.indexOf(repoUser.defaultBranch)
+        listToMutable.removeAt(index)
+        listToMutable.add(0, repoUser.defaultBranch)
+        return listToMutable
     }
 
     private fun showProgressBar() {
@@ -176,4 +165,5 @@ class RepoBrowseViewModel(
     private fun hideProgressBar() {
         _isLoading.value = false
     }
+
 }
