@@ -29,13 +29,17 @@ class RepoBrowseFragment : BaseFragment<FragmentRepoBrowseBinding, RepoBrowseVie
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         initBinding()
-        initRecyclerView()
-        showContents()
+        initView()
         setObservers()
     }
 
     override fun initBinding() {
         binding.vm = viewModel
+    }
+
+    private fun initView() {
+        initRecyclerView()
+        loadBranchList()
     }
 
     private fun initRecyclerView() {
@@ -50,11 +54,11 @@ class RepoBrowseFragment : BaseFragment<FragmentRepoBrowseBinding, RepoBrowseVie
         }
     }
 
-    private fun showContents() {
-        viewModel.moveToBranch(args.defaultBranch)
+    private fun loadBranchList() {
+        viewModel.setBranchList()
     }
 
-    private fun initSpinner(branches: List<String>) {
+    private fun initSpinnerContents(branches: List<String>) {
         ArrayAdapter(
             requireContext(),
             android.R.layout.simple_spinner_item,
@@ -77,7 +81,7 @@ class RepoBrowseFragment : BaseFragment<FragmentRepoBrowseBinding, RepoBrowseVie
             branch.observe(
                 viewLifecycleOwner,
                 Observer {
-                    initSpinner(it)
+                    initSpinnerContents(it)
                 }
             )
         }

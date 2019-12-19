@@ -26,19 +26,23 @@ class RepoBrowseViewModel(
     val isLoading: LiveData<Boolean> get() = _isLoading
     val branch: LiveData<List<String>> get() = _branch
 
-    var currentBranchName: String = ""
-        private set
+    private var currentBranchName: String = ""
 
-    fun moveToBranch(branchName: String) = viewModelScope.launch {
-        showProgressBar()
-        removeFileTreeAt(null)
+    fun setBranchList() = viewModelScope.launch {
         val branchList =
             (userRepoBrowseUsecase.getRepoBranches(
                 repoUser.userName,
                 repoUser.repoName
             ) as Result.Success).data
-        setBranch(branchList = branchList, currentBranchName = branchName)
 
+        if (_branch.value.isNullOrEmpty()) {
+            _branch.value = branchList
+        }
+    }
+
+    fun moveToBranch(branchName: String) = viewModelScope.launch {
+        showProgressBar()
+        removeFileTreeAt(null)
         setFileTree(
             fileTree = userRepoBrowseUsecase.getRepoFileTree(
                 userName = repoUser.userName,
@@ -46,6 +50,7 @@ class RepoBrowseViewModel(
                 branchName = branchName
             )
         )
+        this@RepoBrowseViewModel.currentBranchName = branchName
         hideProgressBar()
     }
 
@@ -153,10 +158,4 @@ class RepoBrowseViewModel(
         _isLoading.value = false
     }
 
-    private fun setBranch(branchList: List<String>, currentBranchName: String) {
-        if (_branch.value.isNullOrEmpty()) {
-            _branch.value = branchList
-        }
-        this@RepoBrowseViewModel.currentBranchName = currentBranchName
-    }
 }
