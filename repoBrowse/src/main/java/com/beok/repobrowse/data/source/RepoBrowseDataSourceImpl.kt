@@ -33,7 +33,7 @@ class RepoBrowseDataSourceImpl(
         withContext(ioDispatcher) {
             return@withContext try {
                 Result.Success(retrofit.getRepoBranches(userName, repoName)
-                    .map { it.name ?: "master" })
+                    .map { it.name ?: "" })
             } catch (e: Exception) {
                 Result.Error(e)
             }

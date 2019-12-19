@@ -19,7 +19,7 @@
 
         <Spinner
             android:id="@+id/sp_branch"
-            OnItemSelected="@{(branch) -> vm.changeBranch(branch.toString())}"
+            OnItemSelected="@{(branch) -> vm.moveToBranch(branch.toString())}"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"

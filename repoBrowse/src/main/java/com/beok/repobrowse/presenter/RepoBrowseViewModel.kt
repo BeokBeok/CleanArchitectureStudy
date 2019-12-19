@@ -21,38 +21,32 @@ class RepoBrowseViewModel(
     private val _isLoading = MutableLiveData<Boolean>()
     private val _branch = MutableLiveData<List<String>>()
 
-    private lateinit var currentBranchName: String
-
     val repoFileTree: LiveData<List<RepoFileTreeModel>> get() = _repoFileTree
     val errMsg: LiveData<Throwable> get() = _errMsg
     val isLoading: LiveData<Boolean> get() = _isLoading
     val branch: LiveData<List<String>> get() = _branch
 
-    fun showRepoFileTree(userName: String, repoName: String, branchName: String) =
-        viewModelScope.launch {
-            showProgressBar()
+    var currentBranchName: String = ""
+        private set
 
-            val branchList =
-                (userRepoBrowseUsecase.getRepoBranches(userName, repoName) as Result.Success).data
-            setBranch(branchList = branchList, currentBranchName = branchName)
-
-            setFileTree(
-                fileTree = userRepoBrowseUsecase.getRepoFileTree(
-                    userName = userName,
-                    repoName = repoName,
-                    branchName = branchName
-                )
-            )
-
-            hideProgressBar()
-        }
-
-    fun changeBranch(branchName: String) = viewModelScope.launch {
-        if (!::currentBranchName.isInitialized) return@launch
-        if (branchName == currentBranchName) return@launch
-
+    fun moveToBranch(branchName: String) = viewModelScope.launch {
+        showProgressBar()
         removeFileTreeAt(null)
-        showRepoFileTree(repoUser.userName, repoUser.repoName, branchName)
+        val branchList =
+            (userRepoBrowseUsecase.getRepoBranches(
+                repoUser.userName,
+                repoUser.repoName
+            ) as Result.Success).data
+        setBranch(branchList = branchList, currentBranchName = branchName)
+
+        setFileTree(
+            fileTree = userRepoBrowseUsecase.getRepoFileTree(
+                userName = repoUser.userName,
+                repoName = repoUser.repoName,
+                branchName = branchName
+            )
+        )
+        hideProgressBar()
     }
 
     fun clickSpecificItem(selectedItem: RepoFileTreeModel) = viewModelScope.launch {
@@ -146,11 +140,9 @@ class RepoBrowseViewModel(
         } ?: return
 
         removedFileTree[removedFileTree.indexOf(parentItem)].expandable = true
-        _repoFileTree.value = removedFileTree.asSequence()
-            .filterNot {
-                it.path.startsWith(parentItem.path.plus("/"))
-            }
-            .toList()
+        _repoFileTree.value = removedFileTree.filterNot {
+            it.path.startsWith(parentItem.path.plus("/"))
+        }
     }
 
     private fun showProgressBar() {

@@ -31,7 +31,7 @@ class RepoBrowseFragment : BaseFragment<FragmentRepoBrowseBinding, RepoBrowseVie
         initBinding()
         initRecyclerView()
         showContents()
-        setObserveErrMsg()
+        setObservers()
     }
 
     override fun initBinding() {
@@ -51,17 +51,7 @@ class RepoBrowseFragment : BaseFragment<FragmentRepoBrowseBinding, RepoBrowseVie
     }
 
     private fun showContents() {
-        viewModel.showRepoFileTree(
-            args.userName,
-            args.repoName,
-            args.defaultBranch
-        )
-        viewModel.branch.observe(
-            viewLifecycleOwner,
-            Observer {
-                initSpinner(it)
-            }
-        )
+        viewModel.moveToBranch(args.defaultBranch)
     }
 
     private fun initSpinner(branches: List<String>) {
@@ -75,13 +65,22 @@ class RepoBrowseFragment : BaseFragment<FragmentRepoBrowseBinding, RepoBrowseVie
         }
     }
 
-    private fun setObserveErrMsg() {
-        viewModel.errMsg.observe(
-            viewLifecycleOwner,
-            Observer {
-                showSnackBar(it.message ?: "")
-            }
-        )
+    private fun setObservers() {
+        viewModel.run {
+            errMsg.observe(
+                viewLifecycleOwner,
+                Observer {
+                    showSnackBar(it.message ?: "")
+                }
+            )
+
+            branch.observe(
+                viewLifecycleOwner,
+                Observer {
+                    initSpinner(it)
+                }
+            )
+        }
     }
 
     private fun getListWithDefaultBranchToTop(branches: List<String>): List<String> {
