@@ -12,13 +12,11 @@ class RepoSearchLocalDataSource(
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ) : RepoSearchDataSource.Local {
 
-    override suspend fun insert(
-        repos: List<ReposEntity>,
-        insertFinished: () -> Unit
-    ) = withContext(ioDispatcher) {
-        repoSearchDao.insert(repos)
-        insertFinished.invoke()
-    }
+    override suspend fun insert(repos: List<ReposEntity>, insertFinished: () -> Unit) =
+        withContext(ioDispatcher) {
+            repoSearchDao.insert(repos)
+            insertFinished.invoke()
+        }
 
     override fun getRepos(user: String): DataSource.Factory<Int, ReposEntity> =
         repoSearchDao.getRepos(user)

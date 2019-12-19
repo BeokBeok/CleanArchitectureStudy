@@ -17,10 +17,8 @@ class RepoSearchAdapter(
     private val viewModel: RepoSearchViewModel
 ) : PagedListAdapter<ReposModel, RecyclerView.ViewHolder>(REPO_COMPARATOR) {
 
-    override fun onCreateViewHolder(
-        parent: ViewGroup,
-        viewType: Int
-    ): RepoSearchViewHolder = RepoSearchViewHolder(layoutRes, parent, bindingId)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RepoSearchViewHolder =
+        RepoSearchViewHolder(layoutRes, parent, bindingId)
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         getItem(position)?.let {
