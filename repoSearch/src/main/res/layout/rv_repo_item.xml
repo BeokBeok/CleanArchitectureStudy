@@ -35,7 +35,7 @@
             app:layout_constraintEnd_toStartOf="@id/tv_repo_forked"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="Repo Name" />
+            tools:text="@sample/reposearch.json/name" />
 
         <TextView
             android:id="@+id/tv_repo_forked"
@@ -57,7 +57,7 @@
             android:text="@{repo.htmlUrl}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_repo_name"
-            tools:text="url" />
+            tools:text="@sample/reposearch.json/url" />
 
         <TextView
             android:id="@+id/tv_repo_language"
@@ -70,7 +70,7 @@
             app:layout_constraintEnd_toStartOf="@id/iv_repo_star"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_repo_url"
-            tools:text="language" />
+            tools:text="@sample/reposearch.json/language" />
 
         <ImageView
             android:id="@+id/iv_repo_star"
@@ -94,7 +94,7 @@
             app:layout_constraintEnd_toStartOf="@id/iv_repo_forks"
             app:layout_constraintStart_toEndOf="@id/iv_repo_star"
             app:layout_constraintTop_toBottomOf="@id/tv_repo_url"
-            tools:text="1" />
+            tools:text="@sample/reposearch.json/stargazers_count" />
 
         <ImageView
             android:id="@+id/iv_repo_forks"
@@ -118,7 +118,7 @@
             app:layout_constraintEnd_toStartOf="@id/iv_repo_license"
             app:layout_constraintStart_toEndOf="@id/iv_repo_forks"
             app:layout_constraintTop_toBottomOf="@id/tv_repo_url"
-            tools:text="1" />
+            tools:text="@sample/reposearch.json/forks_count" />
 
         <ImageView
             android:id="@+id/iv_repo_license"
@@ -141,7 +141,7 @@
             android:text="@{repo.license}"
             app:layout_constraintStart_toEndOf="@id/iv_repo_license"
             app:layout_constraintTop_toBottomOf="@id/tv_repo_url"
-            tools:text="MIT License" />
+            tools:text="@sample/reposearch.json/license/name" />
 
         <TextView
             android:id="@+id/tv_repo_updated_at"
