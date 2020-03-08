@@ -43,4 +43,7 @@ dependencies {
     implementation Libraries.FIREBASE_ADS
 
     implementation Libraries.CORE_KTX
+
+    implementation Libraries.STETHO
+    implementation Libraries.STETHO_OKHTTP
 }

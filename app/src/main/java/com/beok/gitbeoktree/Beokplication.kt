@@ -5,6 +5,7 @@ import com.beok.common.di.getRetrofitBasicModule
 import com.beok.fileviewer.di.FileViewerDI
 import com.beok.repobrowse.di.RepoBrowseDI
 import com.beok.reposearch.di.RepoSearchDI
+import com.facebook.stetho.Stetho
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
@@ -27,6 +28,9 @@ class Beokplication : Application() {
                     )
                 )
             )
+        }
+        if (BuildConfig.DEBUG) {
+            Stetho.initializeWithDefaults(this@Beokplication)
         }
     }
 
