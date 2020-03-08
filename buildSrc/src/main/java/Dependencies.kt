@@ -35,6 +35,8 @@ object Version {
     const val CORE_KTX = "1.1.0"
 
     const val SHIMMER = "0.5.0"
+
+    const val STETHO = "1.5.1"
 }
 
 object ProjectDependencies {
@@ -107,4 +109,7 @@ object Libraries {
     const val CORE_KTX = "androidx.core:core-ktx:${Version.CORE_KTX}"
 
     const val SHIMMER = "com.facebook.shimmer:shimmer:${Version.SHIMMER}"
+
+    const val STETHO = "com.facebook.stetho:stetho:${Version.STETHO}"
+    const val STETHO_OKHTTP = "com.facebook.stetho:stetho-okhttp3:${Version.STETHO}"
 }
