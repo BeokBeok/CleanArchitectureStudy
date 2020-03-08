@@ -26,3 +26,5 @@
   - RxJava
 - DI
   - Koin
+- Debug
+  - Stetho
