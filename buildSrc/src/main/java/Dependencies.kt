@@ -1,5 +1,5 @@
 object Version {
-    const val GRADLE = "3.5.1"
+    const val GRADLE = "4.0.1"
     const val GOOGLE_SERVICE = "4.3.2"
 
     const val KOTLIN = "1.3.50"
@@ -62,7 +62,7 @@ object Release {
 
 object Libraries {
     const val KOTLIN_STDLIB_JDK =
-        "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${Version.KOTLIN}"
+        "org.jetbrains.kotlin:kotlin-stdlib-jdk8:${Version.KOTLIN}"
     const val RUNNER = "androidx.test.runner.AndroidJUnitRunner"
     const val JUNIT = "androidx.test.ext:junit:${Version.JUNIT}"
     const val ESPRESSO = "androidx.test.espresso:espresso-core:${Version.ESPRESSO}"
