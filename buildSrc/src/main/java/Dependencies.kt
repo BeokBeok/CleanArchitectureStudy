@@ -13,7 +13,7 @@ object Version {
 
     const val LIFECYCLE = "2.1.0"
 
-    const val RETROFIT = "2.6.1"
+    const val RETROFIT = "2.9.0"
     const val LOGGING_INTERCEPTOR = "3.14.2"
 
     const val KOIN = "2.0.1"
