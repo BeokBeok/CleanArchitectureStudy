@@ -50,7 +50,7 @@ object ProjectDependencies {
 object AndroidSettings {
     const val COMPILE_SDK = 30
     const val BUILD_TOOLS = "29.0.2"
-    const val MIN_SDK = 23
+    const val MIN_SDK = 30
     const val TARGET_SDK = 30
     const val APP_ID = "com.beok.gitbeoktree"
 }
